@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>W-Wave</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+  <link rel="icon" type="image/x-icon" href="./img/favicon.svg">
+  <link rel="stylesheet" href="https://unpkg.com/accordion-js@3.3.2/dist/accordion.min.css">
+  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/media.css">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <script src="./js/openSearch.js" type="module"></script>
+  <script src="./js/playRadio.js" type="module"></script>
+  <script src="./js/swiper.js" type="module"></script>
+  <script src="./js/burger.js" type="module"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <script src="https://unpkg.com/accordion-js@3.3.2/dist/accordion.min.js"></script>
+  <script src="./js/accordion.js" type="module"></script>
+  <script src="./js/podcasts.js" type="module"></script>
+  <script src="./js/broadcasts/broadcastsChangeRightPart.js" type="module"></script>
+  <script src="./js/broadcasts/broadcastsData.js" type="module"></script>
+  <script src="./js/broadcasts/broadcastsSelect.js" type="module"></script>
+  <script src="./js/guests.js" type="module"></script>
+  <script src="./js/playlists/groupsData.js" type="module"></script>
+  <script src="./js/playlists/createList.js" type="module"></script>
+  <script src="./js/playlists/createItem.js" type="module"></script>
+  <script src="./js/modalForm.js" type="module"></script>
+  <script src="./js/playlists/choosePlaylist.js" type="module"></script>
+  <script src="./js/customCheckbox.js" type="module"></script>
+  <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+  <script>
+    function anim(duration) {
+      let temp;
+      return function (sel) {
+        cancelAnimationFrame(temp);
+        const start = performance.now();
+        const from = window.pageYOffset || document.documentElement.scrollTop,
+          to = document.querySelector(sel).getBoundingClientRect().top;
+        requestAnimationFrame(function step(timestamp) {
+          let progress = (timestamp - start) / duration;
+          1 <= progress && (progress = 1);
+          window.scrollTo(0, from + to * progress | 0);
+          1 > progress && (temp = requestAnimationFrame(step))
+        })
+        document.querySelector('body').style.overflow = 'auto';
+        document.querySelector('.nav-top').classList.remove('burger-is-active');
+      }
+    };
+    const scrollMenu = anim(400) // плавный скролл к нужному блоку
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header-pre-line"></div>
+    <header class="header header__container">
+      <nav class="header__nav nav">
+        <div class="nav-top section-container">
+          <div class="nav-top__logo">
+            <img src="./img/logo.svg" alt="Логотип компании W-Wave Radio">
+          </div>
+          <div class="burger-bg">
+            <ul class="nav-top__list nav__list">
+              <li class="nav-top__item">
+                <a href="#" class="nav-top__link nav__link" onclick="scrollMenu('#podcasts')">
+                  Подкасты
+                </a>
+              </li>
+              <li class="nav-top__item">
+                <a href="#" class="nav-top__link nav__link" onclick="scrollMenu('#broadcasts')">
+                  Передачи
+                </a>
+              </li>
+              <li class="nav-top__item">
+                <a href="#" class="nav-top__link nav__link" onclick="scrollMenu('#guests')">
+                  Гости
+                </a>
+              </li>
+              <li class="nav-top__item">
+                <a href="#" class="nav-top__link nav__link" onclick="scrollMenu('#playlists')">
+                  Плейлисты
+                </a>
+              </li>
+              <li class="nav-top__item">
+                <a href="#" class="nav-top__link nav__link" onclick="scrollMenu('#about-us')">
+                  О нас
+                </a>
+              </li>
+            </ul>
+            <div class="burger-bg-item"></div>
+            <div class="burger-bg-item"></div>
+          </div>
+          <div class="nav-top__btns-container">
+            <div class="nav-top__burger" tabindex="0">
+              <span class="nav-top__burger-line"></span>
+              <span class="nav-top__burger-line"></span>
+              <span class="nav-top__burger-line"></span>
+            </div>
+            <button class="nav-top__search btn">
+              <div class="search-area">
+                <input class="search-area__input" type="text" placeholder="Поиск по сайту">
+              </div>
+              <svg class="search-btn" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                  stroke="#6D31EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M20.9999 21L16.6499 16.65" stroke="#6D31EE" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </button>
+            <button class="nav-top__authoriztion btn">
+              Вход
+            </button>
+          </div>
+        </div>
+        <div class="nav-bottom section-container">
+          <div class="audio-plays-burger" tabindex="0">
+            <div class="audio-plays-burger__btn">
+              <svg class="audio-plays-burger__svg" width="15" height="15" viewBox="0 0 15 15" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="7.5" cy="7.5" r="7.5" fill="#6D31EE" />
+              </svg>
+              <span class="audio-plays-burger__line"></span>
+              <span class="audio-plays-burger__line"></span>
+            </div>
+            Что в эфире?
+          </div>
+          <ul class="nav-bottom__list nav__list">
+            <li class="nav-bottom__item">
+              <a href="#" class="nav-bottom__link nav__link">
+                Новости
+              </a>
+            </li>
+            <li class="nav-bottom__item">
+              <a href="#" class="nav-bottom__link nav__link">
+                Блоги
+              </a>
+            </li>
+            <li class="nav-bottom__item">
+              <a href="#" class="nav-bottom__link nav__link">
+                Топы
+              </a>
+            </li>
+            <li class="nav-bottom__item">
+              <a href="#" class="nav-bottom__link nav__link">
+                Опросы
+              </a>
+            </li>
+            <li class="nav-bottom__item">
+              <a href="#" class="nav-bottom__link nav__link">
+                Рейтинги
+              </a>
+            </li>
+            <li class="nav-bottom__item">
+              <a href="#" class="nav-bottom__link nav__link">
+                Реклама
+              </a>
+            </li>
+          </ul>
+          <div class="nav-bottom__audio-plays audio-plays">
+            <div class="audio-plays__play">
+              <button class="play__btn btn play-media" data-play-radio="false" id="radio-dfm">
+                <audio class="audio" id="radio-dfm-audio" src="https://dfm.hostingradio.ru/dfm128.mp3"></audio>
+                <svg class="play" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10 0C4.475 0 0 4.475 0 10C0 15.525 4.475 20 10 20C15.525 20 20 15.525 20 10C20 4.475 15.525 0 10 0ZM8 14.5V5.5L14 10L8 14.5Z"
+                    fill="#A1A6B4" />
+                </svg>
+                <svg class="stop" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_24531_3491)">
+                    <path
+                      d="M10 0C4.475 0 0 4.475 0 10C0 15.525 4.475 20 10 20C15.525 20 20 15.525 20 10C20 4.475 15.525 0 10 0Z"
+                      fill="#A1A6B4" />
+                    <rect x="7" y="6" width="2" height="8" rx="1" fill="white" />
+                    <rect x="11" y="6" width="2" height="8" rx="1" fill="white" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_24531_3491">
+                      <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </button>
+              <span class="play__ether">
+                Ранее в эфире
+              </span>
+              <span class="play__song-name">
+                &laquo;Музыка&raquo;
+              </span>
+            </div>
+            <div class="audio-plays__play">
+              <button class="play__btn btn play play-media" data-play-radio="false" id="radio-europe">
+                <audio class="audio" id="radio-europe-audio" src="http://ep256.streamr.ru"></audio>
+                <svg class="play" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10 0C4.475 0 0 4.475 0 10C0 15.525 4.475 20 10 20C15.525 20 20 15.525 20 10C20 4.475 15.525 0 10 0ZM8 14.5V5.5L14 10L8 14.5Z"
+                    fill="#A1A6B4" />
+                </svg>
+                <svg class="stop" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_24531_3491)">
+                    <path
+                      d="M10 0C4.475 0 0 4.475 0 10C0 15.525 4.475 20 10 20C15.525 20 20 15.525 20 10C20 4.475 15.525 0 10 0Z"
+                      fill="#A1A6B4" />
+                    <rect x="7" y="6" width="2" height="8" rx="1" fill="white" />
+                    <rect x="11" y="6" width="2" height="8" rx="1" fill="white" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_24531_3491">
+                      <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </button>
+              <span class="play__ether">
+                Сейчас в эфире
+              </span>
+              <span class="play__song-name">
+                &laquo;Как так?&raquo;
+              </span>
+            </div>
+          </div>
+          <img class="header__age-limitation" src="./img/age-limit.svg" alt="Возрастное ограничение: 12+">
+        </div>
+      </nav>
+    </header>
+    <section class="hero section-container">
+      <div class="hero__descr-block">
+        <h1 class="hero__title">
+          Радио <span class="hero__wwave">W-Wawe</span>
+        </h1>
+        <p class="hero__descr">
+          Привет, на&nbsp;связи W-Wawe! Раньше мы&nbsp;были изданием, а&nbsp;теперь пробуем себя в&nbsp;разоворном
+          жанре. Говорим о&nbsp;музыке, политике, истории, науке и&nbsp;культуре. Здесь, помимо прямого
+          эфира&nbsp;&mdash; архив передач и&nbsp;многое другое:)
+        </p>
+        <button class="hero__btn btn">
+          Слушать эфир
+        </button>
+      </div>
+      <div class="hero__img-block">
+        <img src="./img/microphone.png" alt="изображение микрофона" class="hero__microphone-img">
+      </div>
+    </section>
+    <main class="main">
+      <section class="podcasts section-container" id="podcasts">
+        <h2 class="podcasts__title">
+          Подкасты
+        </h2>
+        <ul class="podcasts__list">
+          <li class="podcasts__item podcasts-item">
+            <div class="podcasts__date">
+              14 июня
+            </div>
+            <div class="podcasts-item__preview">
+              <picture>
+                <source media="(max-width: 640px)" srcset="./img/podcasts-preview-480-1.jpg">
+                <img src="./img/podcast-1.jpg" alt="изображение на тему подскаста">
+              </picture>
+            </div>
+            <div class="podcasts-item__content">
+              <div class="content__play-part">
+                <div class="content__about-podcast">
+                  <span class="content__duration">
+                    15:43
+                  </span>
+                  <h3 class="content__title">
+                    Европа, XIX век
+                  </h3>
+                  <span class="content__author">
+                    Дмитрий Гутенберг
+                  </span>
+                </div>
+                <audio
+                  src="https://d1bxy2pveef3fq.cloudfront.net/episodes/original/38676032?episode_id=52165522&show_id=2683877&user_id=9635310&organization_id=9470584&tenant=SPREAKER&timestamp=1671097150&media_type=static&Expires=1671356350&Key-Pair-Id=K2KSORR5FSJ5FK&Signature=V59i-JFy5Ta8wp9zLf6n9S1rJKQSxVO90LP~m65k7qNRJTYXxLZ45VaKpeX1HPX5McaVX0iR8o3KA3lOeuaCaN1Vy0cxd45v5npmlM-z885AJwTLssdjiPDj~c9~D8uqb5NkDdF-qJ~5jK9YKGZr4emUV4tSQksYy5TtyXbImI5AqU3hlweeWGXX~Ylsig~cfJ0ag-hVlHtTMN9txJynkJZq2G0bVNpcUpgOAj6zGD3ptYHTwlwYEX4xs6N3Rsc3hHMj9ZZOETGCLax-9-gBKHiruI4flNBLbkRc2AAxrkPPH9SBoZUJDsS76G3KYLUbymm4zfC9t-fXT5HNOYOBtQ__"
+                  id="europe-XIX-audio">
+                </audio>
+                <button class="content__play-btn play-media btn" data-play-radio="false" id="europe-XIX">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="20" stroke="#A1A6B4" fill="none" stroke-width="2" />
+                    <path class="podcast-play"
+                      d="M21.6924 31.7965L31.5716 24.7996C32.1428 24.3998 32.1428 23.6002 31.5716 23.2004L21.6924 16.2035C20.9943 15.7037 20 16.1835 20 17.0031V30.9969C20 31.8165 20.9943 32.2963 21.6924 31.7965Z"
+                      fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="19" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="27" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                  </svg>
+                </button>
+              </div>
+              <div class="content__user-activity">
+                <span class="user-activity__plays">
+                  <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M1.3 11.331L8.29606 6.5L1.3 1.66897V11.331ZM0.666238 1.23131L0.669532 1.23361L0.666238 1.23131ZM1.41031 12.8347L9.64301 7.14971C10.119 6.82485 10.119 6.17514 9.64301 5.85029L1.41031 0.165315C0.828559 -0.240754 0 0.149072 0 0.815026V12.185C0 12.8509 0.828559 13.2408 1.41031 12.8347Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  258
+                </span>
+                <button class="user-activity__likes">
+                  <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">104</div>
+
+
+                </button>
+                <button class="user-activity__shares">
+                  <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">68</div>
+
+
+                </button>
+              </div>
+            </div>
+          </li>
+          <li class="podcasts__item podcasts-item">
+            <div class="podcasts__date">
+              11 июня
+            </div>
+            <div class="podcasts-item__preview">
+              <picture>
+                <source media="(max-width: 640px)" srcset="./img/podcasts-preview-480-2.jpg">
+                <img src="./img/podcast-2.jpg" alt="изображение на тему подскаста">
+              </picture>
+            </div>
+            <div class="podcasts-item__content">
+              <div class="content__play-part">
+                <div class="content__about-podcast">
+                  <span class="content__duration">
+                    5:32
+                  </span>
+                  <h3 class="content__title">
+                    О музыке
+                  </h3>
+                  <span class="content__author">
+                    Дмитрий Гутенберг
+                  </span>
+                </div>
+                <audio
+                  src="https://content.libsyn.com/p/e/3/7/e379e25fabcfdbfa/vyborg_final_new.mp3?c_id=97699664&cs_id=97699664&destination_id=1751564&response-content-type=audio%2Fmpeg&Expires=1671103983&Signature=PZZbBhj2rxvQqbVgw04N~EmCUtSeHY-rhNeHChNeMd8~md6GhWbAIYMMR6egADefr2Z1DaD-G1GMZHQGz1opMSEKNzyP37pOOgCaSOHPkr3xQKuYoukOhositbJZtBOmWlDGCkaO3AluZ9kBm-zeguM899sRjWEQ-IKiT23loo~LU9zDjNi~4cVlV3QcQXfYmR2VgogagSZQZXxPWu~xBH0Myu0wB7WJDVkiRO6aP-qFjBUTUtMPtBRaZ7fixbVwyVg6z7P5neoo9-acjKqSiicwcQxHW3cdGMX1~oXvn4ULvQfXR86q2z2YcE95-gYla1cGUmv6udxmz7YCQgp0nw__&Key-Pair-Id=K1YS7LZGUP96OI"
+                  id="about-music-audio"></audio>
+                <button class="content__play-btn play-media btn" data-play-radio="false" id="about-music">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="20" stroke="#A1A6B4" fill="none" stroke-width="2" />
+                    <path class="podcast-play"
+                      d="M21.6924 31.7965L31.5716 24.7996C32.1428 24.3998 32.1428 23.6002 31.5716 23.2004L21.6924 16.2035C20.9943 15.7037 20 16.1835 20 17.0031V30.9969C20 31.8165 20.9943 32.2963 21.6924 31.7965Z"
+                      fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="19" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="27" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                  </svg>
+                </button>
+              </div>
+              <div class="content__user-activity">
+                <span class="user-activity__plays">
+                  <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M1.3 11.331L8.29606 6.5L1.3 1.66897V11.331ZM0.666238 1.23131L0.669532 1.23361L0.666238 1.23131ZM1.41031 12.8347L9.64301 7.14971C10.119 6.82485 10.119 6.17514 9.64301 5.85029L1.41031 0.165315C0.828559 -0.240754 0 0.149072 0 0.815026V12.185C0 12.8509 0.828559 13.2408 1.41031 12.8347Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  207
+                </span>
+                <button class="user-activity__likes">
+                  <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">34</div>
+
+
+                </button>
+                <button class="user-activity__shares">
+                  <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">18</div>
+
+
+                </button>
+              </div>
+            </div>
+          </li>
+          <li class="podcasts__item podcasts-item">
+            <div class="podcasts__date">
+              8 июня
+            </div>
+            <div class="podcasts-item__preview">
+              <picture>
+                <source media="(max-width: 640px)" srcset="./img/podcasts-preview-480-3.jpg">
+                <img src="./img/podcast-3.jpg" alt="изображение на тему подскаста">
+              </picture>
+            </div>
+            <div class="podcasts-item__content">
+              <div class="content__play-part">
+                <div class="content__about-podcast">
+                  <span class="content__duration">
+                    8:54
+                  </span>
+                  <h3 class="content__title">
+                    Люди сегодня
+                  </h3>
+                  <span class="content__author">
+                    Анна Васильева
+                  </span>
+                </div>
+                <audio src="https://last.rcmp.me/files/830th%20podCast.mp3" id="people-today-audio"></audio>
+                <button class="content__play-btn play-media btn" data-play-radio="false" id="people-today">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="20" stroke="#A1A6B4" fill="none" stroke-width="2" />
+                    <path class="podcast-play"
+                      d="M21.6924 31.7965L31.5716 24.7996C32.1428 24.3998 32.1428 23.6002 31.5716 23.2004L21.6924 16.2035C20.9943 15.7037 20 16.1835 20 17.0031V30.9969C20 31.8165 20.9943 32.2963 21.6924 31.7965Z"
+                      fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="19" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="27" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                  </svg>
+                </button>
+              </div>
+              <div class="content__user-activity">
+                <span class="user-activity__plays">
+                  <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M1.3 11.331L8.29606 6.5L1.3 1.66897V11.331ZM0.666238 1.23131L0.669532 1.23361L0.666238 1.23131ZM1.41031 12.8347L9.64301 7.14971C10.119 6.82485 10.119 6.17514 9.64301 5.85029L1.41031 0.165315C0.828559 -0.240754 0 0.149072 0 0.815026V12.185C0 12.8509 0.828559 13.2408 1.41031 12.8347Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  104
+                </span>
+                <button class="user-activity__likes">
+                  <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">54</div>
+
+
+                </button>
+                <button class="user-activity__shares">
+                  <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">42</div>
+
+
+                </button>
+              </div>
+            </div>
+          </li>
+          <li class="podcasts__item podcasts-item">
+            <div class="podcasts__date">
+              5 июня
+            </div>
+            <div class="podcasts-item__preview">
+              <picture>
+                <source media="(max-width: 640px)" srcset="./img/podcasts-preview-480-4.jpg">
+                <img src="./img/podcast-4.jpg" alt="изображение на тему подскаста">
+              </picture>
+            </div>
+            <div class="podcasts-item__content">
+              <div class="content__play-part">
+                <div class="content__about-podcast">
+                  <span class="content__duration">
+                    9:04
+                  </span>
+                  <h3 class="content__title">
+                    Хэллоу, Африка!
+                  </h3>
+                  <span class="content__author">
+                    Пётр Дмитриевский
+                  </span>
+                </div>
+                <audio
+                  src="https://media.fireside.fm/file/fireside-audio/podcasts/audio/7/7a45a50b-754f-4fe1-b8ca-b42fe1dc321e/episodes/b/beb08bb4-4982-455e-a4fe-a33401ce7cbd/beb08bb4-4982-455e-a4fe-a33401ce7cbd.mp3"
+                  id="afrika-audio"></audio>
+                <button class="content__play-btn play-media btn" data-play-radio="false" id="afrika">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="20" stroke="#A1A6B4" fill="none" stroke-width="2" />
+                    <path class="podcast-play"
+                      d="M21.6924 31.7965L31.5716 24.7996C32.1428 24.3998 32.1428 23.6002 31.5716 23.2004L21.6924 16.2035C20.9943 15.7037 20 16.1835 20 17.0031V30.9969C20 31.8165 20.9943 32.2963 21.6924 31.7965Z"
+                      fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="19" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="27" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                  </svg>
+                </button>
+              </div>
+              <div class="content__user-activity">
+                <span class="user-activity__plays">
+                  <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M1.3 11.331L8.29606 6.5L1.3 1.66897V11.331ZM0.666238 1.23131L0.669532 1.23361L0.666238 1.23131ZM1.41031 12.8347L9.64301 7.14971C10.119 6.82485 10.119 6.17514 9.64301 5.85029L1.41031 0.165315C0.828559 -0.240754 0 0.149072 0 0.815026V12.185C0 12.8509 0.828559 13.2408 1.41031 12.8347Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  87
+                </span>
+                <button class="user-activity__likes">
+                  <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">44</div>
+
+
+                </button>
+                <button class="user-activity__shares">
+                  <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">5</div>
+
+
+                </button>
+              </div>
+            </div>
+          </li>
+          <li class="podcasts__item podcasts-item">
+            <div class="podcasts__date">
+              2 июня
+            </div>
+            <div class="podcasts-item__preview">
+              <picture>
+                <source media="(max-width: 640px)" srcset="./img/podcasts-preview-480-1.jpg">
+                <img src="./img/podcast-5.jpg" alt="изображение на тему подскаста">
+              </picture>
+            </div>
+            <div class="podcasts-item__content">
+              <div class="content__play-part">
+                <div class="content__about-podcast">
+                  <span class="content__duration">
+                    7:03
+                  </span>
+                  <h3 class="content__title">
+                    Обо всём
+                  </h3>
+                  <span class="content__author">
+                    Пётр Дмитриевский
+                  </span>
+                </div>
+                <audio src="https://www.radio.cz/special-podcasts/wp-content/uploads/2020/12/Blesak-final.mp3"
+                  id="all-audio"></audio>
+                <button class="content__play-btn play-media btn" data-play-radio="false" id="all">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="20" stroke="#A1A6B4" fill="none" stroke-width="2" />
+                    <path class="podcast-play"
+                      d="M21.6924 31.7965L31.5716 24.7996C32.1428 24.3998 32.1428 23.6002 31.5716 23.2004L21.6924 16.2035C20.9943 15.7037 20 16.1835 20 17.0031V30.9969C20 31.8165 20.9943 32.2963 21.6924 31.7965Z"
+                      fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="19" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="27" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                  </svg>
+                </button>
+              </div>
+              <div class="content__user-activity">
+                <span class="user-activity__plays">
+                  <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M1.3 11.331L8.29606 6.5L1.3 1.66897V11.331ZM0.666238 1.23131L0.669532 1.23361L0.666238 1.23131ZM1.41031 12.8347L9.64301 7.14971C10.119 6.82485 10.119 6.17514 9.64301 5.85029L1.41031 0.165315C0.828559 -0.240754 0 0.149072 0 0.815026V12.185C0 12.8509 0.828559 13.2408 1.41031 12.8347Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  64
+                </span>
+                <button class="user-activity__likes">
+                  <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">30</div>
+
+
+                </button>
+                <button class="user-activity__shares">
+                  <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">8</div>
+
+
+                </button>
+              </div>
+            </div>
+          </li>
+          <li class="podcasts__item podcasts-item">
+            <div class="podcasts__date">
+              28 мая
+            </div>
+            <div class="podcasts-item__preview">
+              <picture>
+                <source media="(max-width: 640px)" srcset="./img/podcasts-preview-480-2.jpg">
+                <img src="./img/podcast-6.jpg" alt="изображение на тему подскаста">
+              </picture>
+            </div>
+            <div class="podcasts-item__content">
+              <div class="content__play-part">
+                <div class="content__about-podcast">
+                  <span class="content__duration">
+                    9:15
+                  </span>
+                  <h3 class="content__title">
+                    Физика цвета
+                  </h3>
+                  <span class="content__author">
+                    Татьяна Флеганова
+                  </span>
+                </div>
+                <audio
+                  src="https://s327.podbean.com/pb/b3c4bc59eaaa02aa49f710c554b4ef0b/639afe2f/data1/fs187/10457836/uploads/Podcast_968d9jz.mp3?pbss=d92eb24b-3780-575c-8e9c-b70281acef07"
+                  id="color-audio"></audio>
+                <button class="content__play-btn play-media btn" data-play-radio="false" id="color">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="20" stroke="#A1A6B4" fill="none" stroke-width="2" />
+                    <path class="podcast-play"
+                      d="M21.6924 31.7965L31.5716 24.7996C32.1428 24.3998 32.1428 23.6002 31.5716 23.2004L21.6924 16.2035C20.9943 15.7037 20 16.1835 20 17.0031V30.9969C20 31.8165 20.9943 32.2963 21.6924 31.7965Z"
+                      fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="19" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="27" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                  </svg>
+                </button>
+              </div>
+              <div class="content__user-activity">
+                <span class="user-activity__plays">
+                  <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M1.3 11.331L8.29606 6.5L1.3 1.66897V11.331ZM0.666238 1.23131L0.669532 1.23361L0.666238 1.23131ZM1.41031 12.8347L9.64301 7.14971C10.119 6.82485 10.119 6.17514 9.64301 5.85029L1.41031 0.165315C0.828559 -0.240754 0 0.149072 0 0.815026V12.185C0 12.8509 0.828559 13.2408 1.41031 12.8347Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  58
+                </span>
+                <button class="user-activity__likes">
+                  <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">29</div>
+
+
+                </button>
+                <button class="user-activity__shares">
+                  <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">14</div>
+
+
+                </button>
+              </div>
+            </div>
+          </li>
+          <li class="podcasts__item podcasts-item">
+            <div class="podcasts__date">
+              22 мая
+            </div>
+            <div class="podcasts-item__preview">
+              <picture>
+                <source media="(max-width: 640px)" srcset="./img/podcasts-preview-480-3.jpg">
+                <img src="./img/podcast-7.jpg" alt="изображение на тему подскаста">
+              </picture>
+            </div>
+            <div class="podcasts-item__content">
+              <div class="content__play-part">
+                <div class="content__about-podcast">
+                  <span class="content__duration">
+                    16:04
+                  </span>
+                  <h3 class="content__title">
+                    Источник звука
+                  </h3>
+                  <span class="content__author">
+                    Пётр Дмитриевский
+                  </span>
+                </div>
+                <audio
+                  src="https://media.fireside.fm/file/fireside-audio/podcasts/audio/3/384d9560-c59a-473f-aaa1-894650662d65/episodes/e/e7e0428f-ce90-4686-bf4c-d003f279535d/e7e0428f-ce90-4686-bf4c-d003f279535d.mp3"
+                  id="sound-audio"></audio>
+                <button class="content__play-btn play-media btn" data-play-radio="false" id="sound">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="20" stroke="#A1A6B4" fill="none" stroke-width="2" />
+                    <path class="podcast-play"
+                      d="M21.6924 31.7965L31.5716 24.7996C32.1428 24.3998 32.1428 23.6002 31.5716 23.2004L21.6924 16.2035C20.9943 15.7037 20 16.1835 20 17.0031V30.9969C20 31.8165 20.9943 32.2963 21.6924 31.7965Z"
+                      fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="19" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="27" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                  </svg>
+                </button>
+              </div>
+              <div class="content__user-activity">
+                <span class="user-activity__plays">
+                  <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M1.3 11.331L8.29606 6.5L1.3 1.66897V11.331ZM0.666238 1.23131L0.669532 1.23361L0.666238 1.23131ZM1.41031 12.8347L9.64301 7.14971C10.119 6.82485 10.119 6.17514 9.64301 5.85029L1.41031 0.165315C0.828559 -0.240754 0 0.149072 0 0.815026V12.185C0 12.8509 0.828559 13.2408 1.41031 12.8347Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  55
+                </span>
+                <button class="user-activity__likes">
+                  <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">20</div>
+
+
+                </button>
+                <button class="user-activity__shares">
+                  <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">12</div>
+
+
+                </button>
+              </div>
+            </div>
+          </li>
+          <li class="podcasts__item podcasts-item">
+            <div class="podcasts__date">
+              18 мая
+            </div>
+            <div class="podcasts-item__preview">
+              <picture>
+                <source media="(max-width: 640px)" srcset="./img/podcasts-preview-480-4.jpg">
+                <img src="./img/podcast-8.jpg" alt="изображение на тему подскаста">
+              </picture>
+            </div>
+            <div class="podcasts-item__content">
+              <div class="content__play-part">
+                <div class="content__about-podcast">
+                  <span class="content__duration">
+                    6:55
+                  </span>
+                  <h3 class="content__title">
+                    Правила этикета
+                  </h3>
+                  <span class="content__author">
+                    Татьяна Флеганова
+                  </span>
+                </div>
+                <audio
+                  src="https://cf-media.sndcdn.com/ZOGIAEdH1zom?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vWk9HSUFFZEgxem9tKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTY3MTEwMjIxNX19fV19&Signature=QperoQ6zpSeyOzX-5jMUgSnSnn7VviEC124fg3kpFBu-WDEkbi~f4GfQn0mcOF1Q2E2TfYhKlGubcEXlzhFmkLoP7MJ32QKii8fp40DNIAXWn~IX11faCjS3pwI38dizGTYV6gwWE8Nhav~Q9qmQqPMw1tzN1bWNzJOfclH5TcYLp31kI10XHLtbSrFrVspF9-3j2PNFHD8EypKVQvotUT3qTFUmYCvEBA7JFGlRNTks5I9ABbdEPA~GZyAk42LOJCf4kp4bDxElJ1oSZ7fdLKpZ17atGZfCpmCOQSrtA-JRhRqOhsLVKqSrEraHb844PFRnAvMjY~loNGSXuRAQsg__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ"
+                  id="rules-audio"></audio>
+                <button class="content__play-btn play-media btn" data-play-radio="false" id="rules">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="20" stroke="#A1A6B4" fill="none" stroke-width="2" />
+                    <path class="podcast-play"
+                      d="M21.6924 31.7965L31.5716 24.7996C32.1428 24.3998 32.1428 23.6002 31.5716 23.2004L21.6924 16.2035C20.9943 15.7037 20 16.1835 20 17.0031V30.9969C20 31.8165 20.9943 32.2963 21.6924 31.7965Z"
+                      fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="19" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                    <rect class="podcast-stop" x="27" y="15" width="2" height="18" rx="1" fill="#A1A6B4" />
+                  </svg>
+                </button>
+              </div>
+              <div class="content__user-activity">
+                <span class="user-activity__plays">
+                  <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M1.3 11.331L8.29606 6.5L1.3 1.66897V11.331ZM0.666238 1.23131L0.669532 1.23361L0.666238 1.23131ZM1.41031 12.8347L9.64301 7.14971C10.119 6.82485 10.119 6.17514 9.64301 5.85029L1.41031 0.165315C0.828559 -0.240754 0 0.149072 0 0.815026V12.185C0 12.8509 0.828559 13.2408 1.41031 12.8347Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  24
+                </span>
+                <button class="user-activity__likes">
+                  <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">54</div>
+
+
+                </button>
+                <button class="user-activity__shares">
+                  <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
+                      fill="#A1A6B4" />
+                  </svg>
+                  <div class="user-activity-bg">42</div>
+
+
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <button class="podcasts__btn btn">Ещё подкасты</button>
+      </section>
+      <section class="broadcasts section-container" id="broadcasts">
+        <ul class="broadcasts__list">
+          <li class="broadcasts__item changing-item">
+            <div class="broadcasts-item__img-container">
+              <img class="broadcasts-item__img" src="./img/broadcasts-img-3.jpg" alt="обложка передачи">
+            </div>
+            <div class="broadcasts__content">
+              <h3 class="broadcasts-item__title">
+                Не Рим, не Троя
+              </h3>
+              <p class="broadcasts-item__descr">
+                По вторникам в 12:00
+              </p>
+              <div class="broadcasts-item__details">Подробнее
+                <svg width="28" height="12" viewBox="0 0 28 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M24.3536 6.35355C24.5488 6.15829 24.5488 5.84171 24.3536 5.64645L21.1716 2.46447C20.9763 2.2692 20.6597 2.2692 20.4645 2.46447C20.2692 2.65973 20.2692 2.97631 20.4645 3.17157L23.2929 6L20.4645 8.82843C20.2692 9.02369 20.2692 9.34027 20.4645 9.53553C20.6597 9.7308 20.9763 9.7308 21.1716 9.53553L24.3536 6.35355ZM4 6.5H24V5.5H4V6.5Z"
+                    fill="#121723" />
+                </svg>
+              </div>
+            </div>
+          </li>
+          <li class="broadcasts__item changing-item">
+            <div class="broadcasts-item__img-container">
+              <img class="broadcasts-item__img" src="./img/broadcasts-img-2.jpg" alt="обложка передачи">
+            </div>
+            <div class="broadcasts__content">
+              <h3 class="broadcasts-item__title">
+                Графомания td
+              </h3>
+              <p class="broadcasts-item__descr">
+                По понедельникам в 10:00
+              </p>
+              <div class="broadcasts-item__details">Подробнее
+                <svg width="28" height="12" viewBox="0 0 28 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M24.3536 6.35355C24.5488 6.15829 24.5488 5.84171 24.3536 5.64645L21.1716 2.46447C20.9763 2.2692 20.6597 2.2692 20.4645 2.46447C20.2692 2.65973 20.2692 2.97631 20.4645 3.17157L23.2929 6L20.4645 8.82843C20.2692 9.02369 20.2692 9.34027 20.4645 9.53553C20.6597 9.7308 20.9763 9.7308 21.1716 9.53553L24.3536 6.35355ZM4 6.5H24V5.5H4V6.5Z"
+                    fill="#121723" />
+                </svg>
+              </div>
+            </div>
+          </li>
+          <li class="broadcasts__item changing-item">
+            <div class="broadcasts-item__img-container">
+              <img class="broadcasts-item__img" src="./img/broadcasts-img-1.jpg" alt="обложка передачи">
+            </div>
+            <div class="broadcasts__content">
+              <h3 class="broadcasts-item__title">
+                О людях и книгах
+              </h3>
+              <p class="broadcasts-item__descr">
+                Анонсируется отдельно
+              </p>
+              <div class="broadcasts-item__details">Подробнее
+                <svg width="28" height="12" viewBox="0 0 28 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M24.3536 6.35355C24.5488 6.15829 24.5488 5.84171 24.3536 5.64645L21.1716 2.46447C20.9763 2.2692 20.6597 2.2692 20.4645 2.46447C20.2692 2.65973 20.2692 2.97631 20.4645 3.17157L23.2929 6L20.4645 8.82843C20.2692 9.02369 20.2692 9.34027 20.4645 9.53553C20.6597 9.7308 20.9763 9.7308 21.1716 9.53553L24.3536 6.35355ZM4 6.5H24V5.5H4V6.5Z"
+                    fill="#121723" />
+                </svg>
+              </div>
+            </div>
+          </li>
+          <li class="broadcasts__item broadcasts__navigation">
+            <h2 class="broadcasts__title">Передачи</h2>
+            <label class="broadcasts__author" for="#broadcasts__select">
+              Автор
+              <select class="broadcasts__select" name="" id="broadcasts__select">
+                <option value="value1" selected>Дмитрий Гутенберг</option>
+                <option value="value2">Татьяна Флеганова</option>
+                <option value="value3">Анна Васильева</option>
+                <option value="value4">Пётр Дмитриевский</option>
+              </select>
+            </label>
+          </li>
+          <li class="broadcasts__item changing-item">
+            <div class="broadcasts-item__img-container">
+              <img class="broadcasts-item__img" src="./img/broadcasts-img-6.jpg" alt="обложка передачи">
+            </div>
+            <div class="broadcasts__content">
+              <h3 class="broadcasts-item__title">
+                Живые мысли
+              </h3>
+              <p class="broadcasts-item__descr">
+                По воскресеньям в 15:30
+              </p>
+              <div class="broadcasts-item__details">Подробнее
+                <svg width="28" height="12" viewBox="0 0 28 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M24.3536 6.35355C24.5488 6.15829 24.5488 5.84171 24.3536 5.64645L21.1716 2.46447C20.9763 2.2692 20.6597 2.2692 20.4645 2.46447C20.2692 2.65973 20.2692 2.97631 20.4645 3.17157L23.2929 6L20.4645 8.82843C20.2692 9.02369 20.2692 9.34027 20.4645 9.53553C20.6597 9.7308 20.9763 9.7308 21.1716 9.53553L24.3536 6.35355ZM4 6.5H24V5.5H4V6.5Z"
+                    fill="#121723" />
+                </svg>
+              </div>
+            </div>
+          </li>
+          <li class="broadcasts__item changing-item">
+            <div class="broadcasts-item__img-container">
+              <img class="broadcasts-item__img" src="./img/broadcasts-img-5.jpg" alt="обложка передачи">
+            </div>
+            <div class="broadcasts__content">
+              <h3 class="broadcasts-item__title">
+                Тонкости эпох
+              </h3>
+              <p class="broadcasts-item__descr">
+                По субботам в 10:00
+              </p>
+              <div class="broadcasts-item__details">Подробнее
+                <svg width="28" height="12" viewBox="0 0 28 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M24.3536 6.35355C24.5488 6.15829 24.5488 5.84171 24.3536 5.64645L21.1716 2.46447C20.9763 2.2692 20.6597 2.2692 20.4645 2.46447C20.2692 2.65973 20.2692 2.97631 20.4645 3.17157L23.2929 6L20.4645 8.82843C20.2692 9.02369 20.2692 9.34027 20.4645 9.53553C20.6597 9.7308 20.9763 9.7308 21.1716 9.53553L24.3536 6.35355ZM4 6.5H24V5.5H4V6.5Z"
+                    fill="#121723" />
+                </svg>
+              </div>
+            </div>
+          </li>
+          <li class="broadcasts__item changing-item">
+            <div class="broadcasts-item__img-container">
+              <img class="broadcasts-item__img" src="./img/broadcasts-img-4.jpg" alt="обложка передачи">
+            </div>
+            <div class="broadcasts__content">
+              <h3 class="broadcasts-item__title">
+                Эрудит
+              </h3>
+              <p class="broadcasts-item__descr">
+                По пятницам в 17:00
+              </p>
+              <div class="broadcasts-item__details">Подробнее
+                <svg width="28" height="12" viewBox="0 0 28 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M24.3536 6.35355C24.5488 6.15829 24.5488 5.84171 24.3536 5.64645L21.1716 2.46447C20.9763 2.2692 20.6597 2.2692 20.4645 2.46447C20.2692 2.65973 20.2692 2.97631 20.4645 3.17157L23.2929 6L20.4645 8.82843C20.2692 9.02369 20.2692 9.34027 20.4645 9.53553C20.6597 9.7308 20.9763 9.7308 21.1716 9.53553L24.3536 6.35355ZM4 6.5H24V5.5H4V6.5Z"
+                    fill="#121723" />
+                </svg>
+              </div>
+            </div>
+          </li>
+          <li class="broadcasts__item broadcasts__archive">
+            <img src="./img/broadcasts__microphone.png" alt="иконка микрофона" class="broadcasts__microphone">
+            <button class="btn broadcasts__btn">Архив</button>
+            <span>
+              В архив попадают все передачи, которые вы пропустили! Enjoy:)
+            </span>
+          </li>
+          <li class="broadcasts__item"></li>
+        </ul>
+      </section>
+      <section class="guests section-container" id="guests">
+        <h2 class="guests__title">Гости</h2>
+        <div class="guests__pre-descr">
+          У нас бывают:
+        </div>
+        <div class="guests__descr">
+          Блогеры, арт-критики и&nbsp;деятели искусства, музыканты, молодые учёные и&nbsp;люди науки, историки, филологи
+          и&nbsp;много других интересных гостей!
+        </div>
+        <div class="guests__content">
+          <div class="guests__guests-list accordion-container">
+            <div class="guests__item ac">
+              <div class="ac-header ac-trigger" tabindex="0">
+                <span class="guests__item-title">
+                  Блогеры
+                </span>
+                <svg class="guests__item-btn" width="48" height="48" viewBox="0 0 48 48" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="24" r="20" stroke="#A1A6B4" stroke-width="2" />
+                  <path d="M16 22L24 30L32 22" stroke="#A1A6B4" stroke-width="2" stroke-linecap="square" />
+                </svg>
+              </div>
+              <div class="ac-panel">
+                <div class="ac-text">
+                  <ul class="guests-names-array">
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Сергей Денисов</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Матвей Мечников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Константин Прусино</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Иван
+                      Калитников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0"
+                      data-guest="summer">Евгений Войновский</li>
+                    <li class="guests-names-item" tabindex="0" data-guest="default" data-img="./img/guest-preview.jpg">
+                      Ольга Мартынова</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Дмитрий Михалок</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Пётр
+                      Пиотровский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Олег
+                      Свиридовский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Владислав Кауперс</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Михаил Пожитников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Георгий Полуян</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Денис Тельман</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Юрий
+                      Горин</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Максим Сергеев</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="guests__item ac">
+              <div class="ac-header ac-trigger" tabindex="0">
+                <span class="guests__item-title">
+                  Арт-критики
+                </span>
+                <svg class="guests__item-btn" width="48" height="48" viewBox="0 0 48 48" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="24" r="20" stroke="#A1A6B4" stroke-width="2" />
+                  <path d="M16 22L24 30L32 22" stroke="#A1A6B4" stroke-width="2" stroke-linecap="square" />
+                </svg>
+              </div>
+              <div class="ac-panel">
+                <div class="ac-text">
+                  <ul class="guests-names-array">
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Сергей Денисов</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Матвей Мечников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Константин Прусино</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Иван
+                      Калитников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Евгений Войновский</li>
+                    <li class="guests-names-item" tabindex="0" data-guest="default" data-img="./img/guest-preview.jpg">
+                      Ольга Мартынова</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Дмитрий Михалок</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Пётр
+                      Пиотровский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Олег
+                      Свиридовский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Владислав Кауперс</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Михаил Пожитников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Георгий Полуян</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Денис Тельман</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Юрий
+                      Горин</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Максим Сергеев</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="guests__item ac">
+              <div class="ac-header ac-trigger" tabindex="0">
+                <span class="guests__item-title">
+                  Художники
+                </span>
+                <svg class="guests__item-btn" width="48" height="48" viewBox="0 0 48 48" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="24" r="20" stroke="#A1A6B4" stroke-width="2" />
+                  <path d="M16 22L24 30L32 22" stroke="#A1A6B4" stroke-width="2" stroke-linecap="square" />
+                </svg>
+              </div>
+              <div class="ac-panel">
+                <div class="ac-text">
+                  <ul class="guests-names-array">
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Сергей Денисов</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Матвей Мечников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Константин Прусино</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Иван
+                      Калитников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Евгений Войновский</li>
+                    <li class="guests-names-item" tabindex="0" data-guest="default" data-img="./img/guest-preview.jpg">
+                      Ольга Мартынова</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Дмитрий Михалок</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Пётр
+                      Пиотровский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Олег
+                      Свиридовский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Владислав Кауперс</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Михаил Пожитников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Георгий Полуян</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Денис Тельман</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Юрий
+                      Горин</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Максим Сергеев</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="guests__item ac">
+              <div class="ac-header ac-trigger" tabindex="0">
+                <span class="guests__item-title">
+                  Люди науки
+                </span>
+                <svg class="guests__item-btn" width="48" height="48" viewBox="0 0 48 48" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="24" r="20" stroke="#A1A6B4" stroke-width="2" />
+                  <path d="M16 22L24 30L32 22" stroke="#A1A6B4" stroke-width="2" stroke-linecap="square" />
+                </svg>
+              </div>
+              <div class="ac-panel">
+                <div class="ac-text">
+                  <ul class="guests-names-array">
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Сергей Денисов</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Матвей Мечников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Константин Прусино</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Иван
+                      Калитников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Евгений Войновский</li>
+                    <li class="guests-names-item" tabindex="0" data-guest="default" data-img="./img/guest-preview.jpg">
+                      Ольга Мартынова</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Дмитрий Михалок</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Пётр
+                      Пиотровский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Олег
+                      Свиридовский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Владислав Кауперс</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Михаил Пожитников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Георгий Полуян</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Денис Тельман</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Юрий
+                      Горин</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Максим Сергеев</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="guests__item ac">
+              <div class="ac-header ac-trigger" tabindex="0">
+                <span class="guests__item-title">
+                  Историки
+                </span>
+                <svg class="guests__item-btn" width="48" height="48" viewBox="0 0 48 48" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="24" r="20" stroke="#A1A6B4" stroke-width="2" />
+                  <path d="M16 22L24 30L32 22" stroke="#A1A6B4" stroke-width="2" stroke-linecap="square" />
+                </svg>
+              </div>
+              <div class="ac-panel">
+                <div class="ac-text">
+                  <ul class="guests-names-array">
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Сергей Денисов</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Матвей Мечников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Константин Прусино</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Иван
+                      Калитников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Евгений Войновский</li>
+                    <li class="guests-names-item" tabindex="0" data-guest="default" data-img="./img/guest-preview.jpg">
+                      Ольга Мартынова</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Дмитрий Михалок</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Пётр
+                      Пиотровский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Олег
+                      Свиридовский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Владислав Кауперс</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Михаил Пожитников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Георгий Полуян</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Денис Тельман</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Юрий
+                      Горин</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Максим Сергеев</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="guests__item ac">
+              <div class="ac-header ac-trigger" tabindex="0">
+                <span class="guests__item-title">
+                  Филологи
+                </span>
+                <svg class="guests__item-btn" width="48" height="48" viewBox="0 0 48 48" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="24" r="20" stroke="#A1A6B4" stroke-width="2" />
+                  <path d="M16 22L24 30L32 22" stroke="#A1A6B4" stroke-width="2" stroke-linecap="square" />
+                </svg>
+              </div>
+              <div class="ac-panel">
+                <div class="ac-text">
+                  <ul class="guests-names-array">
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Сергей Денисов</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Матвей Мечников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Константин Прусино</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Иван
+                      Калитников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Евгений Войновский</li>
+                    <li class="guests-names-item" tabindex="0" data-guest="default" data-img="./img/guest-preview.jpg">
+                      Ольга Мартынова</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Дмитрий Михалок</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Пётр
+                      Пиотровский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Олег
+                      Свиридовский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Владислав Кауперс</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Михаил Пожитников</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Георгий Полуян</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Денис Тельман</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Юрий
+                      Горин</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
+                      Максим Сергеев</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="guests__guest-descr">
+            <div class="guest__preview">
+              <img class="guest__preview-img" src="./img/guests-plug.svg" alt="фото гостя">
+            </div>
+            <div class="guest__link-box">
+              <a href="#" class="guest__link">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10 0C12.717 0 13.056 0.00999994 14.122 0.0599999C15.187 0.11 15.912 0.277 16.55 0.525C17.21 0.779 17.766 1.123 18.322 1.678C18.8305 2.1779 19.224 2.78259 19.475 3.45C19.722 4.087 19.89 4.813 19.94 5.878C19.987 6.944 20 7.283 20 10C20 12.717 19.99 13.056 19.94 14.122C19.89 15.187 19.722 15.912 19.475 16.55C19.2247 17.2178 18.8311 17.8226 18.322 18.322C17.822 18.8303 17.2173 19.2238 16.55 19.475C15.913 19.722 15.187 19.89 14.122 19.94C13.056 19.987 12.717 20 10 20C7.283 20 6.944 19.99 5.878 19.94C4.813 19.89 4.088 19.722 3.45 19.475C2.78233 19.2245 2.17753 18.8309 1.678 18.322C1.16941 17.8222 0.775931 17.2175 0.525 16.55C0.277 15.913 0.11 15.187 0.0599999 14.122C0.0129999 13.056 0 12.717 0 10C0 7.283 0.00999994 6.944 0.0599999 5.878C0.11 4.812 0.277 4.088 0.525 3.45C0.775236 2.78218 1.1688 2.17732 1.678 1.678C2.17767 1.16923 2.78243 0.775729 3.45 0.525C4.088 0.277 4.812 0.11 5.878 0.0599999C6.944 0.0129999 7.283 0 10 0ZM10 5C8.67392 5 7.40215 5.52678 6.46447 6.46447C5.52678 7.40215 5 8.67392 5 10C5 11.3261 5.52678 12.5979 6.46447 13.5355C7.40215 14.4732 8.67392 15 10 15C11.3261 15 12.5979 14.4732 13.5355 13.5355C14.4732 12.5979 15 11.3261 15 10C15 8.67392 14.4732 7.40215 13.5355 6.46447C12.5979 5.52678 11.3261 5 10 5ZM16.5 4.75C16.5 4.41848 16.3683 4.10054 16.1339 3.86612C15.8995 3.6317 15.5815 3.5 15.25 3.5C14.9185 3.5 14.6005 3.6317 14.3661 3.86612C14.1317 4.10054 14 4.41848 14 4.75C14 5.08152 14.1317 5.39946 14.3661 5.63388C14.6005 5.8683 14.9185 6 15.25 6C15.5815 6 15.8995 5.8683 16.1339 5.63388C16.3683 5.39946 16.5 5.08152 16.5 4.75ZM10 7C10.7956 7 11.5587 7.31607 12.1213 7.87868C12.6839 8.44129 13 9.20435 13 10C13 10.7956 12.6839 11.5587 12.1213 12.1213C11.5587 12.6839 10.7956 13 10 13C9.20435 13 8.44129 12.6839 7.87868 12.1213C7.31607 11.5587 7 10.7956 7 10C7 9.20435 7.31607 8.44129 7.87868 7.87868C8.44129 7.31607 9.20435 7 10 7Z"
+                    fill="#A1A6B4" />
+                </svg>
+              </a>
+              <a href="#" class="guest__link">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M13.78 20V12.26H16.3722L16.76 9.25111H13.78V7.33111C13.78 6.46 14.0222 5.86556 15.2711 5.86556H16.8644V3.17444C16.0931 3.09261 15.3179 3.05292 14.5422 3.05556C12.2456 3.05556 10.6733 4.45778 10.6733 7.03333V9.25111H8.07556V12.26H10.6733V20H1.11111C0.816426 20 0.533811 19.8829 0.325437 19.6746C0.117063 19.4662 0 19.1836 0 18.8889V1.11111C0 0.816426 0.117063 0.533811 0.325437 0.325437C0.533811 0.117063 0.816426 0 1.11111 0H18.8889C19.1836 0 19.4662 0.117063 19.6746 0.325437C19.8829 0.533811 20 0.816426 20 1.11111V18.8889C20 19.1836 19.8829 19.4662 19.6746 19.6746C19.4662 19.8829 19.1836 20 18.8889 20H13.78Z"
+                    fill="#A1A6B4" />
+                </svg>
+              </a>
+              <a href="#" class="guest__link">
+                <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M21.1621 2.65593C20.3986 2.99362 19.589 3.2154 18.7601 3.31393C19.6338 2.79136 20.2878 1.96894 20.6001 0.999927C19.7801 1.48793 18.8811 1.82993 17.9441 2.01493C17.3147 1.34151 16.4804 0.89489 15.571 0.744511C14.6616 0.594133 13.728 0.748418 12.9153 1.18338C12.1026 1.61834 11.4564 2.30961 11.0772 3.14972C10.6979 3.98983 10.6068 4.93171 10.8181 5.82893C9.15516 5.74558 7.52838 5.31345 6.04334 4.56059C4.55829 3.80773 3.24818 2.75097 2.19805 1.45893C1.82634 2.09738 1.63101 2.82315 1.63205 3.56193C1.63205 5.01193 2.37005 6.29293 3.49205 7.04293C2.82806 7.02202 2.17869 6.84271 1.59805 6.51993V6.57193C1.59825 7.53763 1.93242 8.47354 2.5439 9.22099C3.15538 9.96843 4.00653 10.4814 4.95305 10.6729C4.33667 10.84 3.69036 10.8646 3.06305 10.7449C3.32992 11.5762 3.85006 12.3031 4.55064 12.824C5.25123 13.3449 6.09718 13.6337 6.97005 13.6499C6.10253 14.3313 5.10923 14.8349 4.04693 15.1321C2.98464 15.4293 1.87418 15.5142 0.779053 15.3819C2.69075 16.6114 4.91615 17.264 7.18905 17.2619C14.8821 17.2619 19.0891 10.8889 19.0891 5.36193C19.0891 5.18193 19.0841 4.99993 19.0761 4.82193C19.8949 4.23009 20.6017 3.49695 21.1631 2.65693L21.1621 2.65593Z"
+                    fill="#A1A6B4" />
+                </svg>
+              </a>
+            </div>
+            <h3 class="guest__name">
+            </h3>
+            <p class="guest__descr guest__default-descr">
+            </p>
+            <p class="guest__descr guest__hide-descr" data-guest="default-text">
+              Российский искусствовед, арт-критик, куратор выставок, дизайнер, кандидат культурологии. Арт-критик газеты
+              &laquo;Коммерсантъ&raquo;. Ведёт активную блогерскую деятельность как куратор музея &laquo;Гараж&raquo;,
+              коим является с&nbsp;2016&nbsp;года.
+            </p>
+            <p class="guest__descr guest__hide-descr" data-guest="summer-text">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente vitae, laboriosam unde error rerum
+              nostrum sint quisquam magni exercitationem numquam aliquid corporis cumque, illo culpa dolore, cupiditate
+              aliquam voluptate odio.
+            </p>
+            <button class="guest__btn btn">
+              Эфиры с гостем
+            </button>
+          </div>
+        </div>
+      </section>
+      <section class="playlists section-container" id="playlists">
+        <div class="playlists__wrapper">
+
+          <h2 class="playlists__title">
+            Плейлисты
+          </h2>
+          <div class="playlists__list-title">
+            Жанр
+          </div>
+          <div class="playlists__list">
+            <label class="playlists__item" for="postpankID" data-genre="postpank" tabindex="0">
+              <input type="radio" class="custom-radio-input" id="postpankID" name="music-genre" value="postpank" checked
+                tabindex="-1">
+              <span class="custom-radio">
+                <svg class="custom-radio-svg" width="26" height="26" viewBox="0 0 26 26" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle class="custom-radio-outer" cx="13" cy="13" r="12" stroke="#A1A6B4" stroke-width="2" />
+                  <circle class="custom-radio-inner" cx="13" cy="13" r="6" fill="none" stroke-width="2" />
+                </svg>
+                <svg class="custom-radio-inner-svg" width="12" height="12" viewBox="0 0 12 12" fill="white"
+                  xmlns="http://www.w3.org/2000/svg">
+                </svg>
+              </span>
+              <span class="playlists__item-text">
+                Постпанк
+              </span>
+            </label>
+            <label class="playlists__item" for="hardcoreID" data-genre="hardcore" tabindex="0">
+              <input type="radio" class="custom-radio-input" id="hardcoreID" name="music-genre" value="hardcore"
+                tabindex="-1">
+              <span class="custom-radio">
+                <svg class="custom-radio-svg" width="26" height="26" viewBox="0 0 26 26" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle class="custom-radio-outer" cx="13" cy="13" r="12" stroke="#A1A6B4" stroke-width="2" />
+                  <circle class="custom-radio-inner" cx="13" cy="13" r="6" fill="none" stroke-width="2" />
+                </svg>
+                <svg class="custom-radio-inner-svg" width="12" height="12" viewBox="0 0 12 12" fill="white"
+                  xmlns="http://www.w3.org/2000/svg">
+                </svg>
+              </span>
+              <span class="playlists__item-text">
+                Хардкор
+              </span>
+            </label>
+            <label class="playlists__item" for="pankrockID" data-genre="pank" tabindex="0">
+              <input type="radio" class="custom-radio-input" id="pankrockID" name="music-genre" value="pankrock"
+                tabindex="-1">
+              <span class="custom-radio">
+                <svg class="custom-radio-svg" width="26" height="26" viewBox="0 0 26 26" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle class="custom-radio-outer" cx="13" cy="13" r="12" stroke="#A1A6B4" stroke-width="2" />
+                  <circle class="custom-radio-inner" cx="13" cy="13" r="6" fill="none" stroke-width="2" />
+                </svg>
+                <svg class="custom-radio-inner-svg" width="12" height="12" viewBox="0 0 12 12" fill="white"
+                  xmlns="http://www.w3.org/2000/svg">
+                </svg>
+              </span>
+              <span class="playlists__item-text">
+                Панк-рок
+              </span>
+            </label>
+            <label class="playlists__item" for="rockID" data-genre="postpank" tabindex="0">
+              <input type="radio" class="custom-radio-input" id="rockID" name="music-genre" value="rock" tabindex="-1">
+              <span class="custom-radio">
+                <svg class="custom-radio-svg" width="26" height="26" viewBox="0 0 26 26" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle class="custom-radio-outer" cx="13" cy="13" r="12" stroke="#A1A6B4" stroke-width="2" />
+                  <circle class="custom-radio-inner" cx="13" cy="13" r="6" fill="none" stroke-width="2" />
+                </svg>
+                <svg class="custom-radio-inner-svg" width="12" height="12" viewBox="0 0 12 12" fill="white"
+                  xmlns="http://www.w3.org/2000/svg">
+                </svg>
+              </span>
+              <span class="playlists__item-text">
+                Рок
+              </span>
+            </label>
+            <label class="playlists__item" for="progressiverockID" data-genre="hardcore" tabindex="0">
+              <input type="radio" class="custom-radio-input" id="progressiverockID" name="music-genre"
+                value="progressiverock" tabindex="-1">
+              <span class="custom-radio">
+                <svg class="custom-radio-svg" width="26" height="26" viewBox="0 0 26 26" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle class="custom-radio-outer" cx="13" cy="13" r="12" stroke="#A1A6B4" stroke-width="2" />
+                  <circle class="custom-radio-inner" cx="13" cy="13" r="6" fill="none" stroke-width="2" />
+                </svg>
+                <svg class="custom-radio-inner-svg" width="12" height="12" viewBox="0 0 12 12" fill="white"
+                  xmlns="http://www.w3.org/2000/svg">
+                </svg>
+              </span>
+              <span class="playlists__item-text">
+                Прогрессивный рок
+              </span>
+            </label>
+            <label class="playlists__item" for="electromusicID" data-genre="pank" tabindex="0">
+              <input type="radio" class="custom-radio-input" id="electromusicID" name="music-genre" value="electromusic"
+                tabindex="-1">
+              <span class="custom-radio">
+                <svg class="custom-radio-svg" width="26" height="26" viewBox="0 0 26 26" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle class="custom-radio-outer" cx="13" cy="13" r="12" stroke="#A1A6B4" stroke-width="2" />
+                  <circle class="custom-radio-inner" cx="13" cy="13" r="6" fill="none" stroke-width="2" />
+                </svg>
+                <svg class="custom-radio-inner-svg" width="12" height="12" viewBox="0 0 12 12" fill="white"
+                  xmlns="http://www.w3.org/2000/svg">
+                </svg>
+              </span>
+              <span class="playlists__item-text">
+                Электронная музыка
+              </span>
+            </label>
+            <label class="playlists__item" for="classicmusicID" data-genre="postpank" tabindex="0">
+              <input type="radio" class="custom-radio-input" id="classicmusicID" name="music-genre" value="classicmusic"
+                tabindex="-1">
+              <span class="custom-radio">
+                <svg class="custom-radio-svg" width="26" height="26" viewBox="0 0 26 26" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle class="custom-radio-outer" cx="13" cy="13" r="12" stroke="#A1A6B4" stroke-width="2" />
+                  <circle class="custom-radio-inner" cx="13" cy="13" r="6" fill="none" stroke-width="2" />
+                </svg>
+                <svg class="custom-radio-inner-svg" width="12" height="12" viewBox="0 0 12 12" fill="white"
+                  xmlns="http://www.w3.org/2000/svg">
+                </svg>
+              </span>
+              <span class="playlists__item-text">
+                Классическая музыка
+              </span>
+            </label>
+            <label class="playlists__item" for="environmentID" data-genre="hardcore" tabindex="0">
+              <input type="radio" class="custom-radio-input" id="environmentID" name="music-genre" value="environment"
+                tabindex="-1">
+              <span class="custom-radio">
+                <svg class="custom-radio-svg" width="26" height="26" viewBox="0 0 26 26" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle class="custom-radio-outer" cx="13" cy="13" r="12" stroke="#A1A6B4" stroke-width="2" />
+                  <circle class="custom-radio-inner" cx="13" cy="13" r="6" fill="none" stroke-width="2" />
+                </svg>
+                <svg class="custom-radio-inner-svg" width="12" height="12" viewBox="0 0 12 12" fill="white"
+                  xmlns="http://www.w3.org/2000/svg">
+                </svg>
+              </span>
+              <span class="playlists__item-text">
+                Звуки природы и шум города
+              </span>
+            </label>
+          </div>
+          <div class="playlists__notice playlists__notice--over1600px">
+            Раздел &laquo;Плейлисты&raquo; может содержать информацию, не&nbsp;предназначенную
+            для&nbsp;несовершеннолетних
+            <div class="notice__author-rights">
+              © 2021 l W-Wave
+            </div>
+            <div class="notice__age-limitiation"></div>
+          </div>
+        </div>
+        <div class="playlists__notice playlists__notice--before1600px">
+          Раздел &laquo;Плейлисты&raquo; может содержать информацию, не&nbsp;предназначенную для несовершеннолетних
+          <div class="notice__author-rights">
+            © 2021 l W-Wave
+          </div>
+          <div class="notice__age-limitiation"></div>
+        </div>
+      </section>
+      <section class="same-wave section-container">
+        <div class="same-wave-swiper">
+          <div class="swiper-wrapper">
+            <div class="same-wave__slide swiper-slide">
+              <div class="same-wave__preview">
+                <span class="same-wave__new"></span>
+                <img src="./img/same-wave-preview.png" alt="изображение товара">
+              </div>
+              <div class="same-wave__descr">
+                <h2 class="same-wave__title">
+                  Будь с нами на&nbsp;одной&nbsp;волне!
+                </h2>
+                <div class="same-wave__content-delimiter">
+
+                </div>
+                <div class="same-wave__descr-text">
+                  <p>Друзья, рады представить вам продукт нашего производства! Да-да, несмотря на&nbsp;то, что
+                    мы&nbsp;только начали свой путь радиовещателей, нам&nbsp;хочется, чтобы вы&nbsp;могли как следует
+                    нас расслышать:)</p>
+                  <p>Итак, встречайте! Портативный радиоприёмник-колонка W-Wave 1.0&nbsp;xm. Тщательный подбор всех
+                    делатей, ручная сборка, качественный звук. Пока доступно только 60&nbsp;штук в&nbsp;3&nbsp;цветах,
+                    но&nbsp;мы&nbsp;активно трудимся над новыми партиями и&nbsp;дизайном. Спешите приобрести!</p>
+                </div>
+                <div class="same-wave__cost">
+                  2 800 ₽
+                </div>
+                <button class="same-wave__btn btn">
+                  <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_60053_968)">
+                      <path
+                        d="M10.5 20C16.0228 20 20.5 15.5228 20.5 9.99998C20.5 4.47714 16.0228 0 10.5 0C4.97724 0 0.5 4.47714 0.5 9.99998C0.5 15.5228 4.97724 20 10.5 20Z"
+                        fill="#F0D288" />
+                      <path
+                        d="M17.4383 4.54391L13.7294 3.17676L8.39558 10.8637L8.92665 7.3751L6.02046 5.68219L0.673828 12.1141C0.924147 13.3858 1.41008 14.5718 2.08375 15.6239L5.27361 11.7711L4.09981 16.2962L7.73695 17.6271L13.1407 9.8464L11.9568 14.2958L14.9032 16.0179L20.5579 10.3174C20.5591 10.2534 20.5598 10.1889 20.5598 10.1246C20.5598 8.78258 20.3016 7.50132 19.8328 6.32896L16.548 9.6538L17.4383 4.54391Z"
+                        fill="#121723" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_60053_968">
+                        <rect x="0.5" width="20" height="20" rx="10" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  Купить на Яндекс.Маркет
+                </button>
+              </div>
+            </div>
+            <div class="same-wave__slide swiper-slide">
+              <div class="same-wave__preview">
+                <span class="same-wave__new"></span>
+                <img src="./img/same-wave-second.png" alt="изображение товара">
+              </div>
+              <div class="same-wave__descr">
+                <h2 class="same-wave__title">
+                  Будь с нами на&nbsp;одной&nbsp;волне!
+                </h2>
+                <div class="same-wave__content-delimiter">
+
+                </div>
+                <div class="same-wave__descr-text">
+                  <p>Друзья, рады представить вам продукт нашего производства! Да-да, несмотря на&nbsp;то, что
+                    мы&nbsp;только начали свой путь радиовещателей, нам&nbsp;хочется, чтобы вы&nbsp;могли как следует
+                    нас расслышать:)</p>
+                  <p>Итак, встречайте! Портативный радиоприёмник-колонка W-Wave 1.0&nbsp;xm. Тщательный подбор всех
+                    делатей, ручная сборка, качественный звук. Пока доступно только 60&nbsp;штук в&nbsp;3&nbsp;цветах,
+                    но&nbsp;мы&nbsp;активно трудимся над новыми партиями и&nbsp;дизайном. Спешите приобрести!</p>
+                </div>
+                <div class="same-wave__cost">
+                  2 800 ₽
+                </div>
+                <button class="same-wave__btn btn">
+                  <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_60053_968)">
+                      <path
+                        d="M10.5 20C16.0228 20 20.5 15.5228 20.5 9.99998C20.5 4.47714 16.0228 0 10.5 0C4.97724 0 0.5 4.47714 0.5 9.99998C0.5 15.5228 4.97724 20 10.5 20Z"
+                        fill="#F0D288" />
+                      <path
+                        d="M17.4383 4.54391L13.7294 3.17676L8.39558 10.8637L8.92665 7.3751L6.02046 5.68219L0.673828 12.1141C0.924147 13.3858 1.41008 14.5718 2.08375 15.6239L5.27361 11.7711L4.09981 16.2962L7.73695 17.6271L13.1407 9.8464L11.9568 14.2958L14.9032 16.0179L20.5579 10.3174C20.5591 10.2534 20.5598 10.1889 20.5598 10.1246C20.5598 8.78258 20.3016 7.50132 19.8328 6.32896L16.548 9.6538L17.4383 4.54391Z"
+                        fill="#121723" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_60053_968">
+                        <rect x="0.5" width="20" height="20" rx="10" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  Купить на Яндекс.Маркет
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-same-wave-pagination"></div>
+        </div>
+      </section>
+      <section class="about-us section-container" id="about-us">
+        <div class="about-us__title-part">
+          <div class="about-us__descr-part">
+            <h2 class="about-us__title">
+              О нас
+            </h2>
+            <p class="about-us__pre-descr">
+              Приём-приём! Как слышно? Мы&nbsp;уже в&nbsp;эфире? Отлично, поехали!
+            </p>
+            <p class="about-us__descr">
+              Друзья, мы&nbsp;будем очень рады, если вы&nbsp;поможете стать нам лучше. Нам важен каждый слушатель,
+              поэтому вы&nbsp;можете поделиться обратной связью о&nbsp;наших предеачах, темах, подборках и&nbsp;вообще
+              обо всём! Это&nbsp;можно сделать либо написав нам в&nbsp;форме ниже, либо кликнув на&nbsp;наши соцсети
+              в&nbsp;подвале сайта. Спасибо!&nbsp;Услышимся!:)
+            </p>
+          </div>
+          <div class="about-us__preview-part">
+            <div class="about-us__preview about-us__preview--one"></div>
+            <div class="about-us__preview about-us__preview--two"></div>
+          </div>
+        </div>
+        <div class="about-us__people">
+          <div class="swiper-button-prev swiper-button swiper-button__interactive">
+            <svg class="swiper-button-prev-svg" width="42" height="42" viewBox="0 0 42 42" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <circle r="20" transform="matrix(4.37114e-08 -1 -1 -4.37114e-08 21 21)" stroke="#A1A6B4"
+                stroke-width="2" />
+              <path d="M23 29L15 21L23 13" stroke="#A1A6B4" stroke-width="2" stroke-linecap="square" />
+            </svg>
+          </div>
+          <div class="swiper-button-next swiper-button swiper-button__interactive">
+            <svg class="swiper-button-next-svg" width="42" height="42" viewBox="0 0 42 42" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <circle cx="21" cy="21" r="20" transform="rotate(-90 21 21)" stroke="#A1A6B4" stroke-width="2" />
+              <path d="M19 29L27 21L19 13" stroke="#A1A6B4" stroke-width="2" stroke-linecap="square" />
+            </svg>
+          </div>
+          <div class="swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide swiper-slide-about-us">
+                <div class="people-item__img-wrapper">
+                  <picture>
+                    <source srcset="./img/about-us-people-1.jpg" media="(max-width: 992px)">
+                    <source srcset="./img/about-us-1024-1.jpg" media="(max-width: 1600px)">
+                    <img src="./img/about-us-people-1.jpg" alt="фото автора" class="people-item__preview">
+                  </picture>
+                </div>
+                <h3 class="people-item__name">
+                  Дмитрий Гутенберг
+                </h3>
+                <p class="people-item__descr">
+                  Эксперт (ну, почти) по всем вопросам (почти)
+                </p>
+              </div>
+              <div class="swiper-slide swiper-slide-about-us">
+                <div class="people-item__img-wrapper">
+                  <picture>
+                    <source srcset="./img/about-us-people-2.jpg" media="(max-width: 992px)">
+                    <source srcset="./img/about-us-1024-2.jpg" media="(max-width: 1600px)">
+                    <img src="./img/about-us-people-2.jpg" alt="фото автора" class="people-item__preview">
+                  </picture>
+                </div>
+                <h3 class="people-item__name">
+                  Анна Васильева
+                </h3>
+                <p class="people-item__descr">
+                  Как я здесь оказалась? А главное — зачем?
+                </p>
+              </div>
+              <div class="swiper-slide swiper-slide-about-us">
+                <div class="people-item__img-wrapper">
+                  <picture>
+                    <source srcset="./img/about-us-people-3.jpg" media="(max-width: 992px)">
+                    <source srcset="./img/about-us-1024-3.jpg" media="(max-width: 1600px)">
+                    <img src="./img/about-us-people-3.jpg" alt="фото автора" class="people-item__preview">
+                  </picture>
+                </div>
+                <h3 class="people-item__name">
+                  Пётр Дмитриевский
+                </h3>
+                <p class="people-item__descr">
+                  Господа! Внимание! Благодарю за внимание!
+                </p>
+              </div>
+              <div class="swiper-slide swiper-slide-about-us">
+                <div class="people-item__img-wrapper">
+                  <picture>
+                    <source srcset="./img/about-us-people-4.jpg" media="(max-width: 992px)">
+                    <source srcset="./img/about-us-1024-4.jpg" media="(max-width: 1600px)">
+                    <img src="./img/about-us-people-4.jpg" alt="фото автора" class="people-item__preview">
+                  </picture>
+                </div>
+                <h3 class="people-item__name">
+                  Татьяна Флеганова
+                </h3>
+                <p class="people-item__descr">
+                  Одна я в пальто стою красивая, а вокруг…
+                </p>
+              </div>
+              <div class="swiper-slide swiper-slide-about-us">
+                <div class="people-item__img-wrapper">
+                  <picture>
+                    <source srcset="./img/about-us-people-5.jpg" media="(max-width: 992px)">
+                    <source srcset="./img/about-us-1024-5.jpg" media="(max-width: 1600px)">
+                    <img src="./img/about-us-people-5.jpg" alt="фото автора" class="people-item__preview">
+                  </picture>
+                </div>
+                <h3 class="people-item__name">
+                  Фёдор Прокопьев
+                </h3>
+                <p class="people-item__descr">
+                  Привет! Я фотограф, музыкант, ведущий
+                </p>
+              </div>
+              <div class="swiper-slide swiper-slide-about-us">
+                <div class="people-item__img-wrapper">
+                  <picture>
+                    <source srcset="./img/about-us-people-6.jpg" media="(max-width: 992px)">
+                    <source srcset="./img/about-us-1024-6.jpg" media="(max-width: 1600px)">
+                    <img src="./img/about-us-people-6.jpg" alt="фото автора" class="people-item__preview">
+                  </picture>
+                </div>
+                <h3 class="people-item__name">
+                  Светлана Кортнева
+                </h3>
+                <p class="people-item__descr">
+                  Художник-оформитель. Оформляю
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form action="https://jsonplaceholder.typicode.com/posts" class="about-us__form" id="about-us__form"
+          method="POST">
+          <textarea class="form__textarea" name="message" id="about-us__textarea" cols="30" rows="10"
+            placeholder="Что скажете?"></textarea>
+          <div class="form__user-data">
+            <input name="name" type="text" id="form__user-name" class="form__user-name form-user" placeholder="Имя">
+            <input name="email" type="text" id="form__user-email" class="form__user-email form-user"
+              placeholder="Email">
+          </div>
+          <button class="form__btn btn" type="submit">Отправить</button>
+          <div class="form__personal-data">
+            <input type="checkbox" id="form__checkbox">
+            <label for="form__checkbox" class="personal-data__label" tabindex="0">
+              <span class="custom-checkbox"></span>
+              Согласен на обработку персональных данных
+            </label>
+          </div>
+        </form>
+        <script>
+          const validate = new window.JustValidate('#about-us__form');
+
+          validate.addField('#about-us__textarea', [
+            {
+              rule: 'minLength',
+              value: 30,
+              errorMessage: 'Напишите комментарий не менее 30 символов'
+            },
+            {
+              rule: 'required',
+              errorMessage: 'Пожалуйста, напишите Ваш комментарий'
+            }
+          ])
+            .addField('#form__user-name', [
+              {
+                rule: 'minLength',
+                value: 2,
+                errorMessage: 'Пожалуйста, введите имя (не менее 2 символов)'
+              },
+              {
+                rule: 'required',
+                errorMessage: 'Пожалуйста, введите имя'
+              }
+            ])
+            .addField('#form__user-email', [
+              {
+                rule: 'required',
+                errorMessage: 'Пожалуйста, введите Ваш email'
+              },
+              {
+                rule: 'email',
+                errorMessage: 'email некорректен',
+              }
+            ])
+            .addField('#form__checkbox', [
+              {
+                rule: 'required',
+                errorMessage: 'Подтвердите, что согласны на обработку персональных данных'
+              }
+            ]).onSuccess((event) => {
+              console.log('Validation passes and form submitted', event);
+            });
+        </script>
+      </section>
+      <footer class="footer">
+        <div class="footer__links">
+          <div class="links__contacts section-container">
+            <svg class="links__logo" width="160" height="20" viewBox="0 0 160 20" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M29.2408 0.331491V11.7403C29.2408 14.4291 28.5054 16.4825 27.0345 17.9006C25.5636 19.3002 23.4783 20 20.7786 20C19.438 20 18.2371 19.8066 17.1758 19.4199C16.1332 19.0331 15.2767 18.4899 14.6064 17.7901C13.9176 18.4899 13.0518 19.0331 12.0091 19.4199C10.9665 19.8066 9.78418 20 8.46224 20C5.76252 20 3.67721 19.3002 2.20633 17.9006C0.735443 16.4825 0 14.4291 0 11.7403V0.331491H4.52437V11.6022C4.52437 13.1676 4.8502 14.3278 5.50186 15.0829C6.15351 15.8195 7.12169 16.1878 8.40639 16.1878C11.0316 16.1878 12.3443 14.6593 12.3443 11.6022V0.331491H16.8686V11.6022C16.8686 14.6593 18.1906 16.1878 20.8344 16.1878C23.4038 16.1878 24.6885 14.6593 24.6885 11.6022V0.331491H29.2408Z"
+                fill="white" />
+              <path
+                d="M97.6867 0.331491V11.7403C97.6867 14.4291 96.9513 16.4825 95.4804 17.9006C94.0095 19.3002 91.9242 20 89.2245 20C87.8839 20 86.683 19.8066 85.6217 19.4199C84.5791 19.0331 83.7226 18.4899 83.0524 17.7901C82.3635 18.4899 81.4977 19.0331 80.455 19.4199C79.4124 19.8066 78.2301 20 76.9082 20C74.2084 20 72.1231 19.3002 70.6522 17.9006C69.1814 16.4825 68.4459 14.4291 68.4459 11.7403V0.331491H72.9703V11.6022C72.9703 13.1676 73.2961 14.3278 73.9478 15.0829C74.5994 15.8195 75.5676 16.1878 76.8523 16.1878C79.4775 16.1878 80.7902 14.6593 80.7902 11.6022V0.331491H85.3145V11.6022C85.3145 14.6593 86.6365 16.1878 89.2803 16.1878C91.8497 16.1878 93.1344 14.6593 93.1344 11.6022V0.331491H97.6867Z"
+                fill="white" />
+              <path
+                d="M110.957 0C112.763 0 114.337 0.349908 115.677 1.04972C117.018 1.74954 118.061 2.78085 118.805 4.14365C119.55 5.50644 119.922 7.1547 119.922 9.0884V19.6685H115.398V15.0276H106.461V19.6685H101.992V9.0884C101.992 7.1547 102.365 5.50644 103.11 4.14365C103.854 2.78085 104.897 1.74954 106.238 1.04972C107.578 0.349908 109.151 0 110.957 0ZM115.398 11.4365V8.67403C115.398 7.07182 114.998 5.86556 114.197 5.05525C113.396 4.22652 112.307 3.81216 110.93 3.81216C109.533 3.81216 108.435 4.22652 107.634 5.05525C106.852 5.86556 106.461 7.07182 106.461 8.67403V11.4365H115.398Z"
+                fill="white" />
+              <path
+                d="M142.638 0.331491L134.176 19.6685H129.708L121.273 0.331491H126.161L132.109 14.1436L138.142 0.331491H142.638Z"
+                fill="white" />
+              <path
+                d="M160 18.011C159.069 18.6372 157.896 19.1252 156.481 19.4751C155.085 19.825 153.595 20 152.013 20C150.039 20 148.363 19.7606 146.985 19.2818C145.608 18.7845 144.565 18.1031 143.857 17.2376C143.15 16.3536 142.796 15.3499 142.796 14.2265C142.796 13.1952 143.085 12.2836 143.662 11.4917C144.239 10.6998 145.03 10.1105 146.036 9.72376C145.273 9.3186 144.677 8.76611 144.248 8.0663C143.839 7.36648 143.634 6.58379 143.634 5.71823C143.634 4.66851 143.96 3.71087 144.612 2.8453C145.263 1.97974 146.25 1.28913 147.572 0.773481C148.894 0.257827 150.514 0 152.431 0C153.698 0 154.936 0.128913 156.146 0.38674C157.356 0.62615 158.408 0.957641 159.302 1.38121L158.045 4.80663C156.332 4.01473 154.517 3.61878 152.599 3.61878C151.147 3.61878 150.048 3.83978 149.303 4.28177C148.577 4.70534 148.214 5.28545 148.214 6.0221C148.214 6.7035 148.456 7.22836 148.94 7.59668C149.443 7.94659 150.197 8.12155 151.203 8.12155H156.537V11.6575H150.923C149.788 11.6575 148.912 11.8508 148.298 12.2376C147.684 12.6243 147.376 13.186 147.376 13.9227C147.376 14.6961 147.767 15.3039 148.549 15.7459C149.35 16.1694 150.57 16.3812 152.208 16.3812C153.362 16.3812 154.517 16.2339 155.671 15.9392C156.825 15.6262 157.803 15.1934 158.604 14.6409L160 18.011Z"
+                fill="white" />
+              <path
+                d="M56.8231 11.2025H33.5483V7.83017H56.8231L52.7019 3.67512L55.067 1.29053L63.2258 9.51633L55.067 17.7421L52.7019 15.3576L56.8231 11.2025Z"
+                fill="#AA9DFA" />
+            </svg>
+            <div class="links__social">
+              <a href="#" class="links__social-link">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_24531_5372)">
+                    <path
+                      d="M21.543 6.498C22 8.28 22 12 22 12C22 12 22 15.72 21.543 17.502C21.289 18.487 20.546 19.262 19.605 19.524C17.896 20 12 20 12 20C12 20 6.107 20 4.395 19.524C3.45 19.258 2.708 18.484 2.457 17.502C2 15.72 2 12 2 12C2 12 2 8.28 2.457 6.498C2.711 5.513 3.454 4.738 4.395 4.476C6.107 4 12 4 12 4C12 4 17.896 4 19.605 4.476C20.55 4.742 21.292 5.516 21.543 6.498ZM10 15.5L16 12L10 8.5V15.5Z"
+                      fill="#D2D5DD" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_24531_5372">
+                      <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+              <a href="#" class="links__social-link">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_24531_5373)">
+                    <path
+                      d="M10.2338 8.14624C10.2338 9.0928 11.0569 9.86023 12.0724 9.86023C13.088 9.86023 13.9111 9.0928 13.9111 8.14624C13.9111 7.19968 13.088 6.43231 12.0724 6.43231C11.0569 6.43231 10.2338 7.19968 10.2338 8.14624Z"
+                      fill="#D2D5DD" />
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M8 2C4.68629 2 2 4.68629 2 8V16C2 19.3137 4.68629 22 8 22H16C19.3137 22 22 19.3137 22 16V8C22 4.68629 19.3137 2 16 2H8ZM7.62436 8.14617C7.62436 5.85633 9.61571 4 12.0724 4C14.5292 4 16.5206 5.85633 16.5206 8.14617C16.5206 10.4361 14.5292 12.2925 12.0724 12.2925C9.61571 12.2925 7.62436 10.4361 7.62436 8.14617ZM16.5472 14.4252C16.4907 14.4674 15.4236 15.2535 13.6427 15.5916L16.3307 18.0748C16.8034 18.5147 16.804 19.2285 16.3321 19.6691C15.8602 20.1097 15.0946 20.1104 14.6216 19.6704L12.012 17.3016L9.64177 19.6552C9.4046 19.8846 9.08805 20 8.77109 20C8.46897 20 8.16645 19.8952 7.93169 19.6842C7.45075 19.252 7.43691 18.5384 7.90062 18.0902L10.4519 15.6048C8.62134 15.2746 7.51009 14.468 7.45295 14.4252C6.93171 14.0357 6.84811 13.3262 7.26591 12.8404C7.6839 12.3547 8.44492 12.2767 8.96616 12.6662C8.97719 12.6744 10.1394 13.4883 12.012 13.4895C13.8847 13.4883 15.0228 12.6744 15.0338 12.6662C15.5551 12.2767 16.3163 12.3547 16.7341 12.8404C17.1519 13.3262 17.0683 14.0357 16.5472 14.4252Z"
+                      fill="#D2D5DD" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_24531_5373">
+                      <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+              <a href="#" class="links__social-link">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M2 8C2 4.68652 4.68652 2 8 2H16C19.3135 2 22 4.68652 22 8V16C22 19.3135 19.3135 22 16 22H8C4.68652 22 2 19.3135 2 16V8ZM17.3438 13.4473C17.7139 13.7778 18.0845 14.1089 18.4121 14.4795C18.5415 14.626 18.6665 14.7754 18.7769 14.9346C18.835 15.0181 18.8892 15.104 18.938 15.1934C19.0425 15.3848 19.0439 15.5859 18.9727 15.7383C18.9058 15.8809 18.7754 15.981 18.606 15.9917L16.4209 15.9912C15.8569 16.0356 15.4077 15.8208 15.0293 15.4575C14.7271 15.1675 14.4468 14.8584 14.1558 14.5586C14.0366 14.4355 13.9116 14.3198 13.7622 14.2285C13.5962 14.1265 13.4419 14.0991 13.3086 14.1455C13.2031 14.1821 13.1104 14.2656 13.0352 14.3955C12.8613 14.6938 12.8213 15.0244 12.8047 15.3564C12.7812 15.8418 12.6255 15.9688 12.1089 15.9917C11.0044 16.0405 9.95654 15.8823 8.98242 15.3574C8.12305 14.8945 7.45801 14.2417 6.87842 13.502C5.75 12.0601 4.88574 10.4775 4.10938 8.84912C3.93457 8.48242 4.0625 8.28662 4.4917 8.27881C5.20459 8.26611 5.91797 8.26758 6.63086 8.27832C6.9209 8.28271 7.11279 8.43896 7.22461 8.69727C7.60986 9.59082 8.08203 10.4409 8.67432 11.229L8.78369 11.3721C8.90918 11.5317 9.04541 11.6826 9.22217 11.7969C9.4751 11.9604 9.66797 11.9062 9.7876 11.6401C9.86377 11.4707 9.89697 11.2896 9.91357 11.1084C9.97021 10.4873 9.97705 9.86621 9.87891 9.24756C9.81787 8.86035 9.58643 8.61035 9.17725 8.53711C8.96826 8.49951 8.99902 8.42676 9.10059 8.31445C9.27637 8.12061 9.44141 8.00049 9.771 8.00049L12.2397 8C12.6284 8.07178 12.7158 8.23633 12.7686 8.60596L12.771 11.1909C12.7661 11.334 12.8472 11.7578 13.1191 11.8511C13.3374 11.9189 13.4814 11.7539 13.6118 11.624C14.2036 11.0317 14.6255 10.333 15.0034 9.60986C15.1699 9.29102 15.314 8.96094 15.4536 8.63037C15.5024 8.51562 15.5635 8.42822 15.6455 8.36816C15.7378 8.30029 15.8564 8.26758 16.0117 8.26953L18.3887 8.27246C18.4585 8.27246 18.5298 8.27295 18.5991 8.28418C18.8101 8.31836 18.9404 8.37939 18.9985 8.4834C19.0503 8.57666 19.0439 8.70508 18.9854 8.87939C18.7979 9.43555 18.4399 9.90283 18.0835 10.3677L18.041 10.4233C17.6436 10.9409 17.2202 11.4399 16.8271 11.96C16.4658 12.4346 16.4941 12.6738 16.9429 13.0864C17.0752 13.208 17.2095 13.3276 17.3438 13.4473Z"
+                    fill="#D2D5DD" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <ul class="links__navigation-list section-container">
+            <li class="links__navigation-item" tabindex="0" onclick="scrollMenu('#podcasts')">Подкасты</li>
+            <li class="links__navigation-item" tabindex="0" onclick="scrollMenu('#broadcasts')">Передачи</li>
+            <li class="links__navigation-item" tabindex="0" onclick="scrollMenu('#guests')">Гости</li>
+            <li class="links__navigation-item" tabindex="0" onclick="scrollMenu('#playlists')">Плейлисты</li>
+            <li class="links__navigation-item" tabindex="0">Сетка</li>
+            <li class="links__navigation-item" tabindex="0" onclick="scrollMenu('#about-us')">О нас</li>
+            <li class="links__navigation-item" tabindex="0">Новости</li>
+            <li class="links__navigation-item" tabindex="0">Блоги</li>
+            <li class="links__navigation-item" tabindex="0">Топы</li>
+          </ul>
+        </div>
+        <span class="footer__line"></span>
+        <span class="footer__trademark">W-WAVE ® 2021</span>
+      </footer>
+    </main>
+
+    <div class="modal-form__bg">
+      <div class="modal-form">
+        <span class="modal-form__close" tabindex="0">
+          <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="21" cy="21" r="19.5" stroke="#A1A6B4" stroke-width="3" />
+            <path d="M29.6777 12L12 29.6777M29.6777 29.6777L12 12" stroke="#A1A6B4" stroke-width="3" />
+          </svg>
+        </span>
+        <form action="" class="modal-form__form">
+          <fieldset class="modal-form__fieldset">
+            <legend class="modal-form__legend">
+              Вход
+            </legend>
+            <label for="" class="modal-form__label">
+              Если у вас ещё нет аккаунта, <span>зарегистрируйтесь</span>
+            </label>
+            <input type="text" class="modal-form__input modal-form__input-login" placeholder="Логин">
+            <input type="text" class="modal-form__input modal-form__input-password" placeholder="Пароль">
+            <button class="modal-form__button btn">
+              Войти
+            </button>
+          </fieldset>
+        </form>
+        <div class="modal-form__footer">
+          Войти с помощью
+        </div>
+        <div class="modal-form__links">
+          <a href="#" class="modal-form__link">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M23.3 33.6667V20.7667H27.6204L28.2667 15.7519H23.3V12.5519C23.3 11.1 23.7037 10.1093 25.7852 10.1093H28.4408V5.62408C27.1552 5.48769 25.8632 5.42154 24.5704 5.42594C20.7426 5.42594 18.1223 7.76297 18.1223 12.0556V15.7519H13.7926V20.7667H18.1223V33.6667H2.18523C1.69408 33.6667 1.22306 33.4716 0.875769 33.1243C0.528479 32.777 0.333374 32.306 0.333374 31.8148V2.1852C0.333374 1.69405 0.528479 1.22303 0.875769 0.875738C1.22306 0.528449 1.69408 0.333344 2.18523 0.333344H31.8149C32.306 0.333344 32.777 0.528449 33.1243 0.875738C33.4716 1.22303 33.6667 1.69405 33.6667 2.1852V31.8148C33.6667 32.306 33.4716 32.777 33.1243 33.1243C32.777 33.4716 32.306 33.6667 31.8149 33.6667H23.3Z"
+                fill="#A1A6B4" />
+            </svg>
+          </a>
+          <a href="#" class="modal-form__link">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="33.33" height="33.33" rx="2" fill="#A1A6B4" />
+              <path
+                d="M17.7487 23.332H16.3854C16.3854 23.332 13.3772 23.5131 10.7277 20.7545C7.83835 17.7461 5.28686 11.7765 5.28686 11.7765C5.28686 11.7765 5.13973 11.3853 5.29964 11.1959C5.47938 10.9831 5.96857 10.9695 5.96857 10.9695L9.22782 10.9482C9.22782 10.9482 9.53491 10.9994 9.75468 11.1608C9.93588 11.294 10.0373 11.543 10.0373 11.543C10.0373 11.543 10.5641 12.8752 11.2617 14.0804C12.6233 16.4331 13.2575 16.9477 13.7198 16.6957C14.3934 16.3283 14.1914 13.3698 14.1914 13.3698C14.1914 13.3698 14.2037 12.296 13.8522 11.8177C13.58 11.4475 13.0667 11.3391 12.84 11.3089C12.6566 11.2844 12.9576 10.8587 13.3478 10.6676C13.9343 10.3803 14.9699 10.3641 16.1938 10.3765C17.1473 10.3863 17.4219 10.4458 17.7946 10.5357C18.6597 10.7446 18.6327 11.4138 18.5745 12.8578L18.5745 12.8579C18.5571 13.2893 18.537 13.7899 18.537 14.3681C18.537 14.4983 18.5332 14.6371 18.5293 14.7798V14.7799C18.509 15.5193 18.4858 16.3656 18.9726 16.6802C19.2223 16.8415 19.8331 16.7042 21.3603 14.111C22.084 12.8819 22.627 11.4368 22.627 11.4368C22.627 11.4368 22.7453 11.1791 22.9297 11.0688C23.1181 10.9561 23.3726 10.9907 23.3726 10.9907L26.8023 10.9695C26.8023 10.9695 27.8329 10.8466 27.9997 11.3118C28.1747 11.8001 27.6146 12.9402 26.2135 14.8077C24.8827 16.5813 24.236 17.2332 24.2968 17.8106C24.3401 18.2221 24.7429 18.5959 25.5137 19.311L25.5668 19.3603C27.2548 20.9272 27.7051 21.7501 27.8121 21.9456C27.8207 21.9615 27.8271 21.9732 27.8318 21.9809C28.5873 23.2337 26.9939 23.332 26.9939 23.332L23.9477 23.3746C23.9477 23.3746 23.2931 23.5041 22.4317 22.9125C21.9813 22.6033 21.5409 22.0985 21.1214 21.6174L21.1214 21.6174C20.4798 20.8818 19.8868 20.2019 19.3806 20.3624C18.5317 20.6319 18.5583 22.4613 18.5583 22.4613C18.5583 22.4613 18.5645 22.852 18.371 23.0601C18.1605 23.2866 17.7487 23.332 17.7487 23.332Z"
+                fill="#121723" />
+            </svg>
+          </a>
+          <a href="#" class="modal-form__link">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="33.33" height="33.33" rx="2" fill="#A1A6B4" />
+              <path
+                d="M20.9403 11.9923C20.1517 11.2694 18.7687 10.4043 16.7183 10.4043C13.8309 10.4043 11.3802 12.2649 10.4945 14.8364C10.2761 15.5001 10.1427 16.2111 10.1427 16.9459C10.1427 17.6806 10.2761 18.3917 10.5066 19.0553C11.3802 21.6269 13.8309 23.4874 16.7183 23.4874C18.344 23.4874 19.5815 23.0489 20.5036 22.4208C21.9595 21.4254 22.6146 19.9441 22.7359 18.9605H16.7183V15.0024H26.9701C27.1277 15.666 27.2006 16.3059 27.2006 17.1829C27.2006 20.4299 26.0116 23.1675 23.9491 25.028C22.1414 26.6634 19.6664 27.6115 16.7183 27.6115C12.4477 27.6115 8.75954 25.2176 6.96398 21.7335C6.22395 20.2877 5.79932 18.6642 5.79932 16.9459C5.79932 15.2275 6.22395 13.604 6.96398 12.1582C8.75954 8.67409 12.4477 6.28027 16.7183 6.28027C19.6664 6.28027 22.1293 7.33499 24.0219 9.05333L20.9403 11.9923Z"
+                fill="#121723" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
