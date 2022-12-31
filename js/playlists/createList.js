@@ -1,7 +1,7 @@
 import { createItem } from "./createItem.js";
 import { genreList } from "./groupsData.js";
 
-const playlists = document.querySelector('.playlists');
+const playlists = document.querySelector('.playlists__container');
 export const choicesList = document.querySelector('.playlists__list');
 
 export function createList(isGenreExist) {
@@ -11,13 +11,15 @@ export function createList(isGenreExist) {
 
   // кнопки переключения
   const leftBtn = document.querySelector('.swiper-button-prev-svg').cloneNode(true);
-  leftBtn.classList.add('playlists__swiper-button-prev', 'playlists__swiper-button', 'swiper-button__interactive');
+  leftBtn.classList.add('playlists__swiper-button-prev', 'playlists__swiper-button', 'swiper-button-interactive');
   leftBtn.classList.remove('swiper-button-prev-svg');
   leftBtn.setAttribute('tabindex', '0');
+  leftBtn.addEventListener('mousedown', (e) => {e.preventDefault()})
   const rightBtn = document.querySelector('.swiper-button-next-svg').cloneNode(true);
-  rightBtn.classList.add('playlists__swiper-button-next', 'playlists__swiper-button', 'swiper-button__interactive');
+  rightBtn.classList.add('playlists__swiper-button-next', 'playlists__swiper-button', 'swiper-button-interactive');
   rightBtn.classList.remove('swiper-button-next-svg');
   rightBtn.setAttribute('tabindex', '0');
+  rightBtn.addEventListener('mousedown', (e) => {e.preventDefault()})
 
   const groupsList = document.createElement('div');
   groupsList.classList.add('swiper-wrapper', 'anti-swiper');

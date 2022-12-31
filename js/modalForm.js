@@ -1,7 +1,7 @@
 import { body } from "./burger.js";
 
 const enterBtn = document.querySelector('.nav-top__authoriztion')
-const formBg = document.querySelector('.modal-form__bg');
+const formBg = document.querySelector('.modal-form-bg');
 const form = document.querySelector('.modal-form');
 const closeBtn = document.querySelector('.modal-form__close');
 

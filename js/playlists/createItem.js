@@ -3,9 +3,10 @@
 export function createItem(groupLanguage, previewSrc, groupTitle, groupSongs, ul) {
   const li = document.createElement('li');
   li.classList.add('playlists__music-groups-item');
+  li.setAttribute('tabindex', '0');
 
     const preview = document.createElement('div');
-    preview.classList.add('music-group-item__preview');
+    preview.classList.add('music-group-item__preview', 'preview');
     li.append(preview);
 
       const previewLanguage = document.createElement('span');
@@ -16,6 +17,10 @@ export function createItem(groupLanguage, previewSrc, groupTitle, groupSongs, ul
       previewImg.setAttribute('src', previewSrc);
       previewImg.setAttribute('alt', "фото исполнителя");
       preview.append(previewImg);
+
+      const playBtn = document.createElement('span');
+      playBtn.classList.add('preview__play-btn');
+      preview.append(playBtn);
 
     const descr = document.createElement('div')
     descr.classList.add('music-group-item__descr');

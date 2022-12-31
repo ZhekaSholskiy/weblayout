@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="ru">
 
 <head>
   <meta charset="UTF-8">
@@ -33,62 +34,46 @@
   <script src="./js/modalForm.js" type="module"></script>
   <script src="./js/playlists/choosePlaylist.js" type="module"></script>
   <script src="./js/customCheckbox.js" type="module"></script>
+  <script src="./js/accessibility.js" type="module"></script>
   <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
   <script>
-    function anim(duration) {
-      let temp;
-      return function (sel) {
-        cancelAnimationFrame(temp);
-        const start = performance.now();
-        const from = window.pageYOffset || document.documentElement.scrollTop,
-          to = document.querySelector(sel).getBoundingClientRect().top;
-        requestAnimationFrame(function step(timestamp) {
-          let progress = (timestamp - start) / duration;
-          1 <= progress && (progress = 1);
-          window.scrollTo(0, from + to * progress | 0);
-          1 > progress && (temp = requestAnimationFrame(step))
-        })
-        document.querySelector('body').style.overflow = 'auto';
-        document.querySelector('.nav-top').classList.remove('burger-is-active');
-      }
-    };
-    const scrollMenu = anim(400) // плавный скролл к нужному блоку
+
   </script>
 </head>
 
 <body>
-  <div class="container">
-    <div class="header-pre-line"></div>
-    <header class="header header__container">
-      <nav class="header__nav nav">
-        <div class="nav-top section-container">
+  <div class="header-pre-line"></div>
+  <header class="header">
+    <div class="container header__container">
+      <div class="header__top-container">
+        <div class="nav nav-top">
           <div class="nav-top__logo">
             <img src="./img/logo.svg" alt="Логотип компании W-Wave Radio">
           </div>
           <div class="burger-bg">
             <ul class="nav-top__list nav__list">
               <li class="nav-top__item">
-                <a href="#" class="nav-top__link nav__link" onclick="scrollMenu('#podcasts')">
+                <a href="#" class="nav-top__link nav__link" data-id="#podcasts">
                   Подкасты
                 </a>
               </li>
               <li class="nav-top__item">
-                <a href="#" class="nav-top__link nav__link" onclick="scrollMenu('#broadcasts')">
+                <a href="#" class="nav-top__link nav__link" data-id="#broadcasts">
                   Передачи
                 </a>
               </li>
               <li class="nav-top__item">
-                <a href="#" class="nav-top__link nav__link" onclick="scrollMenu('#guests')">
+                <a href="#" class="nav-top__link nav__link" data-id="#guests">
                   Гости
                 </a>
               </li>
               <li class="nav-top__item">
-                <a href="#" class="nav-top__link nav__link" onclick="scrollMenu('#playlists')">
+                <a href="#" class="nav-top__link nav__link" data-id="#playlists">
                   Плейлисты
                 </a>
               </li>
               <li class="nav-top__item">
-                <a href="#" class="nav-top__link nav__link" onclick="scrollMenu('#about-us')">
+                <a href="#" class="nav-top__link nav__link" data-id="#about-us">
                   О нас
                 </a>
               </li>
@@ -102,10 +87,10 @@
               <span class="nav-top__burger-line"></span>
               <span class="nav-top__burger-line"></span>
             </div>
-            <button class="nav-top__search btn">
-              <div class="search-area">
+            <div class="nav-top__search btn" tabindex="0">
+              <span class="search-area">
                 <input class="search-area__input" type="text" placeholder="Поиск по сайту">
-              </div>
+              </span>
               <svg class="search-btn" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -114,13 +99,15 @@
                 <path d="M20.9999 21L16.6499 16.65" stroke="#6D31EE" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round" />
               </svg>
-            </button>
+            </div>
             <button class="nav-top__authoriztion btn">
               Вход
             </button>
           </div>
         </div>
-        <div class="nav-bottom section-container">
+      </div>
+      <div class="header__bottom-container">
+        <div class="nav nav-bottom">
           <div class="audio-plays-burger" tabindex="0">
             <div class="audio-plays-burger__btn">
               <svg class="audio-plays-burger__svg" width="15" height="15" viewBox="0 0 15 15" fill="none"
@@ -165,10 +152,10 @@
             </li>
           </ul>
           <div class="nav-bottom__audio-plays audio-plays">
-            <div class="audio-plays__play">
+            <div class="audio-plays__play is-play play">
               <button class="play__btn btn play-media" data-play-radio="false" id="radio-dfm">
                 <audio class="audio" id="radio-dfm-audio" src="https://dfm.hostingradio.ru/dfm128.mp3"></audio>
-                <svg class="play" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                <svg class="is-play" width="20" height="20" viewBox="0 0 20 20" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M10 0C4.475 0 0 4.475 0 10C0 15.525 4.475 20 10 20C15.525 20 20 15.525 20 10C20 4.475 15.525 0 10 0ZM8 14.5V5.5L14 10L8 14.5Z"
@@ -197,10 +184,10 @@
                 &laquo;Музыка&raquo;
               </span>
             </div>
-            <div class="audio-plays__play">
-              <button class="play__btn btn play play-media" data-play-radio="false" id="radio-europe">
+            <div class="audio-plays__play play">
+              <button class="play__btn btn is-play play-media" data-play-radio="false" id="radio-europe">
                 <audio class="audio" id="radio-europe-audio" src="http://ep256.streamr.ru"></audio>
-                <svg class="play" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                <svg class="is-play" width="20" height="20" viewBox="0 0 20 20" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M10 0C4.475 0 0 4.475 0 10C0 15.525 4.475 20 10 20C15.525 20 20 15.525 20 10C20 4.475 15.525 0 10 0ZM8 14.5V5.5L14 10L8 14.5Z"
@@ -208,7 +195,7 @@
                 </svg>
                 <svg class="stop" width="20" height="20" viewBox="0 0 20 20" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_24531_3491)">
+                  <g clip-path="url(#clip0_24531_3492)">
                     <path
                       d="M10 0C4.475 0 0 4.475 0 10C0 15.525 4.475 20 10 20C15.525 20 20 15.525 20 10C20 4.475 15.525 0 10 0Z"
                       fill="#A1A6B4" />
@@ -216,7 +203,7 @@
                     <rect x="11" y="6" width="2" height="8" rx="1" fill="white" />
                   </g>
                   <defs>
-                    <clipPath id="clip0_24531_3491">
+                    <clipPath id="clip0_24531_3492">
                       <rect width="20" height="20" fill="white" />
                     </clipPath>
                   </defs>
@@ -232,9 +219,11 @@
           </div>
           <img class="header__age-limitation" src="./img/age-limit.svg" alt="Возрастное ограничение: 12+">
         </div>
-      </nav>
-    </header>
-    <section class="hero section-container">
+      </div>
+    </div>
+  </header>
+  <section class="hero">
+    <div class="container hero__container">
       <div class="hero__descr-block">
         <h1 class="hero__title">
           Радио <span class="hero__wwave">W-Wawe</span>
@@ -251,9 +240,11 @@
       <div class="hero__img-block">
         <img src="./img/microphone.png" alt="изображение микрофона" class="hero__microphone-img">
       </div>
-    </section>
-    <main class="main">
-      <section class="podcasts section-container" id="podcasts">
+    </div>
+  </section>
+  <main class="main">
+    <section class="podcasts" id="podcasts">
+      <div class="container podcasts__container">
         <h2 class="podcasts__title">
           Подкасты
         </h2>
@@ -268,7 +259,7 @@
                 <img src="./img/podcast-1.jpg" alt="изображение на тему подскаста">
               </picture>
             </div>
-            <div class="podcasts-item__content">
+            <div class="podcasts-item__content content">
               <div class="content__play-part">
                 <div class="content__about-podcast">
                   <span class="content__duration">
@@ -296,7 +287,7 @@
                   </svg>
                 </button>
               </div>
-              <div class="content__user-activity">
+              <div class="content__user-activity user-activity">
                 <span class="user-activity__plays">
                   <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -311,7 +302,7 @@
                       d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">104</div>
+                  <span class="user-activity-bg">104</span>
 
 
                 </button>
@@ -321,7 +312,7 @@
                       d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">68</div>
+                  <span class="user-activity-bg">68</span>
 
 
                 </button>
@@ -338,7 +329,7 @@
                 <img src="./img/podcast-2.jpg" alt="изображение на тему подскаста">
               </picture>
             </div>
-            <div class="podcasts-item__content">
+            <div class="podcasts-item__content content">
               <div class="content__play-part">
                 <div class="content__about-podcast">
                   <span class="content__duration">
@@ -365,7 +356,7 @@
                   </svg>
                 </button>
               </div>
-              <div class="content__user-activity">
+              <div class="content__user-activity user-activity">
                 <span class="user-activity__plays">
                   <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -380,7 +371,7 @@
                       d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">34</div>
+                  <span class="user-activity-bg">34</span>
 
 
                 </button>
@@ -390,7 +381,7 @@
                       d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">18</div>
+                  <span class="user-activity-bg">18</span>
 
 
                 </button>
@@ -407,7 +398,7 @@
                 <img src="./img/podcast-3.jpg" alt="изображение на тему подскаста">
               </picture>
             </div>
-            <div class="podcasts-item__content">
+            <div class="podcasts-item__content content">
               <div class="content__play-part">
                 <div class="content__about-podcast">
                   <span class="content__duration">
@@ -432,7 +423,7 @@
                   </svg>
                 </button>
               </div>
-              <div class="content__user-activity">
+              <div class="content__user-activity user-activity">
                 <span class="user-activity__plays">
                   <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -447,7 +438,7 @@
                       d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">54</div>
+                  <span class="user-activity-bg">54</span>
 
 
                 </button>
@@ -457,7 +448,7 @@
                       d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">42</div>
+                  <span class="user-activity-bg">42</span>
 
 
                 </button>
@@ -474,7 +465,7 @@
                 <img src="./img/podcast-4.jpg" alt="изображение на тему подскаста">
               </picture>
             </div>
-            <div class="podcasts-item__content">
+            <div class="podcasts-item__content content">
               <div class="content__play-part">
                 <div class="content__about-podcast">
                   <span class="content__duration">
@@ -501,7 +492,7 @@
                   </svg>
                 </button>
               </div>
-              <div class="content__user-activity">
+              <div class="content__user-activity user-activity">
                 <span class="user-activity__plays">
                   <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -516,7 +507,7 @@
                       d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">44</div>
+                  <span class="user-activity-bg">44</span>
 
 
                 </button>
@@ -526,7 +517,7 @@
                       d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">5</div>
+                  <span class="user-activity-bg">5</span>
 
 
                 </button>
@@ -543,7 +534,7 @@
                 <img src="./img/podcast-5.jpg" alt="изображение на тему подскаста">
               </picture>
             </div>
-            <div class="podcasts-item__content">
+            <div class="podcasts-item__content content">
               <div class="content__play-part">
                 <div class="content__about-podcast">
                   <span class="content__duration">
@@ -569,7 +560,7 @@
                   </svg>
                 </button>
               </div>
-              <div class="content__user-activity">
+              <div class="content__user-activity user-activity">
                 <span class="user-activity__plays">
                   <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -584,7 +575,7 @@
                       d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">30</div>
+                  <span class="user-activity-bg">30</span>
 
 
                 </button>
@@ -594,7 +585,7 @@
                       d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">8</div>
+                  <span class="user-activity-bg">8</span>
 
 
                 </button>
@@ -611,7 +602,7 @@
                 <img src="./img/podcast-6.jpg" alt="изображение на тему подскаста">
               </picture>
             </div>
-            <div class="podcasts-item__content">
+            <div class="podcasts-item__content content">
               <div class="content__play-part">
                 <div class="content__about-podcast">
                   <span class="content__duration">
@@ -638,7 +629,7 @@
                   </svg>
                 </button>
               </div>
-              <div class="content__user-activity">
+              <div class="content__user-activity user-activity">
                 <span class="user-activity__plays">
                   <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -653,7 +644,7 @@
                       d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">29</div>
+                  <span class="user-activity-bg">29</span>
 
 
                 </button>
@@ -663,7 +654,7 @@
                       d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">14</div>
+                  <span class="user-activity-bg">14</span>
 
 
                 </button>
@@ -680,7 +671,7 @@
                 <img src="./img/podcast-7.jpg" alt="изображение на тему подскаста">
               </picture>
             </div>
-            <div class="podcasts-item__content">
+            <div class="podcasts-item__content content">
               <div class="content__play-part">
                 <div class="content__about-podcast">
                   <span class="content__duration">
@@ -707,7 +698,7 @@
                   </svg>
                 </button>
               </div>
-              <div class="content__user-activity">
+              <div class="content__user-activity user-activity">
                 <span class="user-activity__plays">
                   <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -722,7 +713,7 @@
                       d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">20</div>
+                  <span class="user-activity-bg">20</span>
 
 
                 </button>
@@ -732,7 +723,7 @@
                       d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">12</div>
+                  <span class="user-activity-bg">12</span>
 
 
                 </button>
@@ -749,7 +740,7 @@
                 <img src="./img/podcast-8.jpg" alt="изображение на тему подскаста">
               </picture>
             </div>
-            <div class="podcasts-item__content">
+            <div class="podcasts-item__content content">
               <div class="content__play-part">
                 <div class="content__about-podcast">
                   <span class="content__duration">
@@ -776,7 +767,7 @@
                   </svg>
                 </button>
               </div>
-              <div class="content__user-activity">
+              <div class="content__user-activity user-activity">
                 <span class="user-activity__plays">
                   <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -791,7 +782,7 @@
                       d="M9.425 0C8.294 0 7.2085 0.5297 6.5 1.36676C5.7915 0.5297 4.706 0 3.575 0C1.573 0 0 1.58256 0 3.59673C0 6.06866 2.21 8.08283 5.5575 11.1433L6.5 12L7.4425 11.1368C10.79 8.08283 13 6.06866 13 3.59673C13 1.58256 11.427 0 9.425 0ZM6.565 10.1689L6.5 10.2343L6.435 10.1689C3.341 7.35041 1.3 5.48665 1.3 3.59673C1.3 2.28883 2.275 1.3079 3.575 1.3079C4.576 1.3079 5.551 1.95531 5.8955 2.85123H7.111C7.449 1.95531 8.424 1.3079 9.425 1.3079C10.725 1.3079 11.7 2.28883 11.7 3.59673C11.7 5.48665 9.659 7.35041 6.565 10.1689Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">54</div>
+                  <span class="user-activity-bg">54</span>
 
 
                 </button>
@@ -801,7 +792,7 @@
                       d="M10 9.18876C9.49333 9.18876 9.04 9.38454 8.69333 9.69127L3.94 6.98293C3.97333 6.83283 4 6.68273 4 6.5261C4 6.36948 3.97333 6.21938 3.94 6.06928L8.64 3.38705C9 3.71335 9.47333 3.91566 10 3.91566C11.1067 3.91566 12 3.04116 12 1.95783C12 0.874498 11.1067 0 10 0C8.89333 0 8 0.874498 8 1.95783C8 2.11446 8.02667 2.26456 8.06 2.41466L3.36 5.09689C3 4.77058 2.52667 4.56827 2 4.56827C0.893333 4.56827 0 5.44277 0 6.5261C0 7.60944 0.893333 8.48394 2 8.48394C2.52667 8.48394 3 8.28163 3.36 7.95532L8.10667 10.6702C8.07333 10.8072 8.05333 10.9508 8.05333 11.0944C8.05333 12.1451 8.92667 13 10 13C11.0733 13 11.9467 12.1451 11.9467 11.0944C11.9467 10.0437 11.0733 9.18876 10 9.18876ZM10 1.30522C10.3667 1.30522 10.6667 1.5989 10.6667 1.95783C10.6667 2.31677 10.3667 2.61044 10 2.61044C9.63333 2.61044 9.33333 2.31677 9.33333 1.95783C9.33333 1.5989 9.63333 1.30522 10 1.30522ZM2 7.17871C1.63333 7.17871 1.33333 6.88504 1.33333 6.5261C1.33333 6.16717 1.63333 5.87349 2 5.87349C2.36667 5.87349 2.66667 6.16717 2.66667 6.5261C2.66667 6.88504 2.36667 7.17871 2 7.17871ZM10 11.76C9.63333 11.76 9.33333 11.4664 9.33333 11.1074C9.33333 10.7485 9.63333 10.4548 10 10.4548C10.3667 10.4548 10.6667 10.7485 10.6667 11.1074C10.6667 11.4664 10.3667 11.76 10 11.76Z"
                       fill="#A1A6B4" />
                   </svg>
-                  <div class="user-activity-bg">42</div>
+                  <span class="user-activity-bg">42</span>
 
 
                 </button>
@@ -810,10 +801,12 @@
           </li>
         </ul>
         <button class="podcasts__btn btn">Ещё подкасты</button>
-      </section>
-      <section class="broadcasts section-container" id="broadcasts">
+      </div>
+    </section>
+    <section class="broadcasts" id="broadcasts">
+      <div class="container broadcasts__container">
         <ul class="broadcasts__list">
-          <li class="broadcasts__item changing-item">
+          <li class="broadcasts__item broadcasts-item changing-item" tabindex="0">
             <div class="broadcasts-item__img-container">
               <img class="broadcasts-item__img" src="./img/broadcasts-img-3.jpg" alt="обложка передачи">
             </div>
@@ -833,7 +826,7 @@
               </div>
             </div>
           </li>
-          <li class="broadcasts__item changing-item">
+          <li class="broadcasts__item broadcasts-item changing-item" tabindex="0">
             <div class="broadcasts-item__img-container">
               <img class="broadcasts-item__img" src="./img/broadcasts-img-2.jpg" alt="обложка передачи">
             </div>
@@ -853,7 +846,7 @@
               </div>
             </div>
           </li>
-          <li class="broadcasts__item changing-item">
+          <li class="broadcasts__item broadcasts-item changing-item" tabindex="0">
             <div class="broadcasts-item__img-container">
               <img class="broadcasts-item__img" src="./img/broadcasts-img-1.jpg" alt="обложка передачи">
             </div>
@@ -873,11 +866,11 @@
               </div>
             </div>
           </li>
-          <li class="broadcasts__item broadcasts__navigation">
+          <li class="broadcasts__item broadcasts-item broadcasts__navigation">
             <h2 class="broadcasts__title">Передачи</h2>
-            <label class="broadcasts__author" for="#broadcasts__select">
+            <label class="broadcasts__author" for="broadcasts__select">
               Автор
-              <select class="broadcasts__select" name="" id="broadcasts__select">
+              <select class="broadcasts__select" id="broadcasts__select">
                 <option value="value1" selected>Дмитрий Гутенберг</option>
                 <option value="value2">Татьяна Флеганова</option>
                 <option value="value3">Анна Васильева</option>
@@ -885,7 +878,7 @@
               </select>
             </label>
           </li>
-          <li class="broadcasts__item changing-item">
+          <li class="broadcasts__item broadcasts-item changing-item" tabindex="0">
             <div class="broadcasts-item__img-container">
               <img class="broadcasts-item__img" src="./img/broadcasts-img-6.jpg" alt="обложка передачи">
             </div>
@@ -905,7 +898,7 @@
               </div>
             </div>
           </li>
-          <li class="broadcasts__item changing-item">
+          <li class="broadcasts__item broadcasts-item changing-item" tabindex="0">
             <div class="broadcasts-item__img-container">
               <img class="broadcasts-item__img" src="./img/broadcasts-img-5.jpg" alt="обложка передачи">
             </div>
@@ -925,7 +918,7 @@
               </div>
             </div>
           </li>
-          <li class="broadcasts__item changing-item">
+          <li class="broadcasts__item broadcasts-item changing-item" tabindex="0">
             <div class="broadcasts-item__img-container">
               <img class="broadcasts-item__img" src="./img/broadcasts-img-4.jpg" alt="обложка передачи">
             </div>
@@ -945,17 +938,19 @@
               </div>
             </div>
           </li>
-          <li class="broadcasts__item broadcasts__archive">
+          <li class="broadcasts__item broadcasts-item broadcasts__archive">
             <img src="./img/broadcasts__microphone.png" alt="иконка микрофона" class="broadcasts__microphone">
             <button class="btn broadcasts__btn">Архив</button>
             <span>
               В архив попадают все передачи, которые вы пропустили! Enjoy:)
             </span>
           </li>
-          <li class="broadcasts__item"></li>
+          <li class="broadcasts__item broadcasts-item"></li>
         </ul>
-      </section>
-      <section class="guests section-container" id="guests">
+      </div>
+    </section>
+    <section class="guests" id="guests">
+      <div class="container guests__container">
         <h2 class="guests__title">Гости</h2>
         <div class="guests__pre-descr">
           У нас бывают:
@@ -988,8 +983,7 @@
                       Константин Прусино</li>
                     <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Иван
                       Калитников</li>
-                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0"
-                      data-guest="summer">Евгений Войновский</li>
+                    <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">Евгений Войновский</li>
                     <li class="guests-names-item" tabindex="0" data-guest="default" data-img="./img/guest-preview.jpg">
                       Ольга Мартынова</li>
                     <li class="guests-names-item" data-guest="summer" data-img="./img/guests-plug.svg" tabindex="0">
@@ -1255,7 +1249,7 @@
               </div>
             </div>
           </div>
-          <div class="guests__guest-descr">
+          <div class="guests__guest-descr guest">
             <div class="guest__preview">
               <img class="guest__preview-img" src="./img/guests-plug.svg" alt="фото гостя">
             </div>
@@ -1282,7 +1276,7 @@
                 </svg>
               </a>
             </div>
-            <h3 class="guest__name">
+            <h3 class="guest__name">&nbsp;
             </h3>
             <p class="guest__descr guest__default-descr">
             </p>
@@ -1301,8 +1295,10 @@
             </button>
           </div>
         </div>
-      </section>
-      <section class="playlists section-container" id="playlists">
+      </div>
+    </section>
+    <section class="playlists" id="playlists">
+      <div class="container playlists__container">
         <div class="playlists__wrapper">
 
           <h2 class="playlists__title">
@@ -1448,7 +1444,7 @@
               </span>
             </label>
           </div>
-          <div class="playlists__notice playlists__notice--over1600px">
+          <div class="playlists__notice notice playlists__notice--over1600px">
             Раздел &laquo;Плейлисты&raquo; может содержать информацию, не&nbsp;предназначенную
             для&nbsp;несовершеннолетних
             <div class="notice__author-rights">
@@ -1457,15 +1453,17 @@
             <div class="notice__age-limitiation"></div>
           </div>
         </div>
-        <div class="playlists__notice playlists__notice--before1600px">
+        <div class="playlists__notice notice playlists__notice--before1600px">
           Раздел &laquo;Плейлисты&raquo; может содержать информацию, не&nbsp;предназначенную для несовершеннолетних
           <div class="notice__author-rights">
             © 2021 l W-Wave
           </div>
           <div class="notice__age-limitiation"></div>
         </div>
-      </section>
-      <section class="same-wave section-container">
+      </div>
+    </section>
+    <section class="same-wave">
+      <div class="container same-wave__container">
         <div class="same-wave-swiper">
           <div class="swiper-wrapper">
             <div class="same-wave__slide swiper-slide">
@@ -1493,7 +1491,7 @@
                 </div>
                 <button class="same-wave__btn btn">
                   <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_60053_968)">
+                    <g clip-path="url(#clip0_60053_969)">
                       <path
                         d="M10.5 20C16.0228 20 20.5 15.5228 20.5 9.99998C20.5 4.47714 16.0228 0 10.5 0C4.97724 0 0.5 4.47714 0.5 9.99998C0.5 15.5228 4.97724 20 10.5 20Z"
                         fill="#F0D288" />
@@ -1502,7 +1500,7 @@
                         fill="#121723" />
                     </g>
                     <defs>
-                      <clipPath id="clip0_60053_968">
+                      <clipPath id="clip0_60053_969">
                         <rect x="0.5" width="20" height="20" rx="10" fill="white" />
                       </clipPath>
                     </defs>
@@ -1557,8 +1555,10 @@
           </div>
           <div class="swiper-same-wave-pagination"></div>
         </div>
-      </section>
-      <section class="about-us section-container" id="about-us">
+      </div>
+    </section>
+    <section class="about-us" id="about-us">
+      <div class="container about-us__container">
         <div class="about-us__title-part">
           <div class="about-us__descr-part">
             <h2 class="about-us__title">
@@ -1580,7 +1580,7 @@
           </div>
         </div>
         <div class="about-us__people">
-          <div class="swiper-button-prev swiper-button swiper-button__interactive">
+          <div class="swiper-button-prev swiper-button swiper-button-interactive">
             <svg class="swiper-button-prev-svg" width="42" height="42" viewBox="0 0 42 42" fill="none"
               xmlns="http://www.w3.org/2000/svg">
               <circle r="20" transform="matrix(4.37114e-08 -1 -1 -4.37114e-08 21 21)" stroke="#A1A6B4"
@@ -1588,7 +1588,7 @@
               <path d="M23 29L15 21L23 13" stroke="#A1A6B4" stroke-width="2" stroke-linecap="square" />
             </svg>
           </div>
-          <div class="swiper-button-next swiper-button swiper-button__interactive">
+          <div class="swiper-button-next swiper-button swiper-button-interactive">
             <svg class="swiper-button-next-svg" width="42" height="42" viewBox="0 0 42 42" fill="none"
               xmlns="http://www.w3.org/2000/svg">
               <circle cx="21" cy="21" r="20" transform="rotate(-90 21 21)" stroke="#A1A6B4" stroke-width="2" />
@@ -1597,7 +1597,7 @@
           </div>
           <div class="swiper">
             <div class="swiper-wrapper">
-              <div class="swiper-slide swiper-slide-about-us">
+              <div class="swiper-slide swiper-slide-about-us people-item">
                 <div class="people-item__img-wrapper">
                   <picture>
                     <source srcset="./img/about-us-people-1.jpg" media="(max-width: 992px)">
@@ -1612,7 +1612,7 @@
                   Эксперт (ну, почти) по всем вопросам (почти)
                 </p>
               </div>
-              <div class="swiper-slide swiper-slide-about-us">
+              <div class="swiper-slide swiper-slide-about-us people-item">
                 <div class="people-item__img-wrapper">
                   <picture>
                     <source srcset="./img/about-us-people-2.jpg" media="(max-width: 992px)">
@@ -1627,7 +1627,7 @@
                   Как я здесь оказалась? А главное — зачем?
                 </p>
               </div>
-              <div class="swiper-slide swiper-slide-about-us">
+              <div class="swiper-slide swiper-slide-about-us people-item">
                 <div class="people-item__img-wrapper">
                   <picture>
                     <source srcset="./img/about-us-people-3.jpg" media="(max-width: 992px)">
@@ -1642,7 +1642,7 @@
                   Господа! Внимание! Благодарю за внимание!
                 </p>
               </div>
-              <div class="swiper-slide swiper-slide-about-us">
+              <div class="swiper-slide swiper-slide-about-us people-item">
                 <div class="people-item__img-wrapper">
                   <picture>
                     <source srcset="./img/about-us-people-4.jpg" media="(max-width: 992px)">
@@ -1657,7 +1657,7 @@
                   Одна я в пальто стою красивая, а вокруг…
                 </p>
               </div>
-              <div class="swiper-slide swiper-slide-about-us">
+              <div class="swiper-slide swiper-slide-about-us people-item">
                 <div class="people-item__img-wrapper">
                   <picture>
                     <source srcset="./img/about-us-people-5.jpg" media="(max-width: 992px)">
@@ -1672,7 +1672,7 @@
                   Привет! Я фотограф, музыкант, ведущий
                 </p>
               </div>
-              <div class="swiper-slide swiper-slide-about-us">
+              <div class="swiper-slide swiper-slide-about-us people-item">
                 <div class="people-item__img-wrapper">
                   <picture>
                     <source srcset="./img/about-us-people-6.jpg" media="(max-width: 992px)">
@@ -1690,19 +1690,24 @@
             </div>
           </div>
         </div>
-        <form action="https://jsonplaceholder.typicode.com/posts" class="about-us__form" id="about-us__form"
+        <form action="https://jsonplaceholder.typicode.com/posts" class="about-us__form form" id="about-us__form"
           method="POST">
-          <textarea class="form__textarea" name="message" id="about-us__textarea" cols="30" rows="10"
+          <label for="about-us__textarea" class="error-label textarea-error-label">
+            <textarea class="form__textarea" name="message" id="about-us__textarea" cols="30" rows="10"
             placeholder="Что скажете?"></textarea>
+          </label>
           <div class="form__user-data">
-            <input name="name" type="text" id="form__user-name" class="form__user-name form-user" placeholder="Имя">
-            <input name="email" type="text" id="form__user-email" class="form__user-email form-user"
-              placeholder="Email">
+            <label for="form__user-name" class="error-label form-user-label">
+              <input name="name" type="text" id="form__user-name" class="form__user-name form-user" placeholder="Имя">
+            </label>
+            <label for="form__user-email" class="error-label form-user-label">
+              <input name="email" type="text" id="form__user-email" class="form__user-email form-user" placeholder="Email">
+            </label>
           </div>
           <button class="form__btn btn" type="submit">Отправить</button>
-          <div class="form__personal-data">
+          <div class="form__personal-data personal-data">
             <input type="checkbox" id="form__checkbox">
-            <label for="form__checkbox" class="personal-data__label" tabindex="0">
+            <label for="form__checkbox" class="personal-data__label error-label just-validate-error-field" tabindex="0">
               <span class="custom-checkbox"></span>
               Согласен на обработку персональных данных
             </label>
@@ -1752,143 +1757,176 @@
               console.log('Validation passes and form submitted', event);
             });
         </script>
-      </section>
-      <footer class="footer">
-        <div class="footer__links">
-          <div class="links__contacts section-container">
-            <svg class="links__logo" width="160" height="20" viewBox="0 0 160 20" fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M29.2408 0.331491V11.7403C29.2408 14.4291 28.5054 16.4825 27.0345 17.9006C25.5636 19.3002 23.4783 20 20.7786 20C19.438 20 18.2371 19.8066 17.1758 19.4199C16.1332 19.0331 15.2767 18.4899 14.6064 17.7901C13.9176 18.4899 13.0518 19.0331 12.0091 19.4199C10.9665 19.8066 9.78418 20 8.46224 20C5.76252 20 3.67721 19.3002 2.20633 17.9006C0.735443 16.4825 0 14.4291 0 11.7403V0.331491H4.52437V11.6022C4.52437 13.1676 4.8502 14.3278 5.50186 15.0829C6.15351 15.8195 7.12169 16.1878 8.40639 16.1878C11.0316 16.1878 12.3443 14.6593 12.3443 11.6022V0.331491H16.8686V11.6022C16.8686 14.6593 18.1906 16.1878 20.8344 16.1878C23.4038 16.1878 24.6885 14.6593 24.6885 11.6022V0.331491H29.2408Z"
-                fill="white" />
-              <path
-                d="M97.6867 0.331491V11.7403C97.6867 14.4291 96.9513 16.4825 95.4804 17.9006C94.0095 19.3002 91.9242 20 89.2245 20C87.8839 20 86.683 19.8066 85.6217 19.4199C84.5791 19.0331 83.7226 18.4899 83.0524 17.7901C82.3635 18.4899 81.4977 19.0331 80.455 19.4199C79.4124 19.8066 78.2301 20 76.9082 20C74.2084 20 72.1231 19.3002 70.6522 17.9006C69.1814 16.4825 68.4459 14.4291 68.4459 11.7403V0.331491H72.9703V11.6022C72.9703 13.1676 73.2961 14.3278 73.9478 15.0829C74.5994 15.8195 75.5676 16.1878 76.8523 16.1878C79.4775 16.1878 80.7902 14.6593 80.7902 11.6022V0.331491H85.3145V11.6022C85.3145 14.6593 86.6365 16.1878 89.2803 16.1878C91.8497 16.1878 93.1344 14.6593 93.1344 11.6022V0.331491H97.6867Z"
-                fill="white" />
-              <path
-                d="M110.957 0C112.763 0 114.337 0.349908 115.677 1.04972C117.018 1.74954 118.061 2.78085 118.805 4.14365C119.55 5.50644 119.922 7.1547 119.922 9.0884V19.6685H115.398V15.0276H106.461V19.6685H101.992V9.0884C101.992 7.1547 102.365 5.50644 103.11 4.14365C103.854 2.78085 104.897 1.74954 106.238 1.04972C107.578 0.349908 109.151 0 110.957 0ZM115.398 11.4365V8.67403C115.398 7.07182 114.998 5.86556 114.197 5.05525C113.396 4.22652 112.307 3.81216 110.93 3.81216C109.533 3.81216 108.435 4.22652 107.634 5.05525C106.852 5.86556 106.461 7.07182 106.461 8.67403V11.4365H115.398Z"
-                fill="white" />
-              <path
-                d="M142.638 0.331491L134.176 19.6685H129.708L121.273 0.331491H126.161L132.109 14.1436L138.142 0.331491H142.638Z"
-                fill="white" />
-              <path
-                d="M160 18.011C159.069 18.6372 157.896 19.1252 156.481 19.4751C155.085 19.825 153.595 20 152.013 20C150.039 20 148.363 19.7606 146.985 19.2818C145.608 18.7845 144.565 18.1031 143.857 17.2376C143.15 16.3536 142.796 15.3499 142.796 14.2265C142.796 13.1952 143.085 12.2836 143.662 11.4917C144.239 10.6998 145.03 10.1105 146.036 9.72376C145.273 9.3186 144.677 8.76611 144.248 8.0663C143.839 7.36648 143.634 6.58379 143.634 5.71823C143.634 4.66851 143.96 3.71087 144.612 2.8453C145.263 1.97974 146.25 1.28913 147.572 0.773481C148.894 0.257827 150.514 0 152.431 0C153.698 0 154.936 0.128913 156.146 0.38674C157.356 0.62615 158.408 0.957641 159.302 1.38121L158.045 4.80663C156.332 4.01473 154.517 3.61878 152.599 3.61878C151.147 3.61878 150.048 3.83978 149.303 4.28177C148.577 4.70534 148.214 5.28545 148.214 6.0221C148.214 6.7035 148.456 7.22836 148.94 7.59668C149.443 7.94659 150.197 8.12155 151.203 8.12155H156.537V11.6575H150.923C149.788 11.6575 148.912 11.8508 148.298 12.2376C147.684 12.6243 147.376 13.186 147.376 13.9227C147.376 14.6961 147.767 15.3039 148.549 15.7459C149.35 16.1694 150.57 16.3812 152.208 16.3812C153.362 16.3812 154.517 16.2339 155.671 15.9392C156.825 15.6262 157.803 15.1934 158.604 14.6409L160 18.011Z"
-                fill="white" />
-              <path
-                d="M56.8231 11.2025H33.5483V7.83017H56.8231L52.7019 3.67512L55.067 1.29053L63.2258 9.51633L55.067 17.7421L52.7019 15.3576L56.8231 11.2025Z"
-                fill="#AA9DFA" />
-            </svg>
-            <div class="links__social">
-              <a href="#" class="links__social-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_24531_5372)">
-                    <path
-                      d="M21.543 6.498C22 8.28 22 12 22 12C22 12 22 15.72 21.543 17.502C21.289 18.487 20.546 19.262 19.605 19.524C17.896 20 12 20 12 20C12 20 6.107 20 4.395 19.524C3.45 19.258 2.708 18.484 2.457 17.502C2 15.72 2 12 2 12C2 12 2 8.28 2.457 6.498C2.711 5.513 3.454 4.738 4.395 4.476C6.107 4 12 4 12 4C12 4 17.896 4 19.605 4.476C20.55 4.742 21.292 5.516 21.543 6.498ZM10 15.5L16 12L10 8.5V15.5Z"
-                      fill="#D2D5DD" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_24531_5372">
-                      <rect width="24" height="24" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </a>
-              <a href="#" class="links__social-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_24531_5373)">
-                    <path
-                      d="M10.2338 8.14624C10.2338 9.0928 11.0569 9.86023 12.0724 9.86023C13.088 9.86023 13.9111 9.0928 13.9111 8.14624C13.9111 7.19968 13.088 6.43231 12.0724 6.43231C11.0569 6.43231 10.2338 7.19968 10.2338 8.14624Z"
-                      fill="#D2D5DD" />
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M8 2C4.68629 2 2 4.68629 2 8V16C2 19.3137 4.68629 22 8 22H16C19.3137 22 22 19.3137 22 16V8C22 4.68629 19.3137 2 16 2H8ZM7.62436 8.14617C7.62436 5.85633 9.61571 4 12.0724 4C14.5292 4 16.5206 5.85633 16.5206 8.14617C16.5206 10.4361 14.5292 12.2925 12.0724 12.2925C9.61571 12.2925 7.62436 10.4361 7.62436 8.14617ZM16.5472 14.4252C16.4907 14.4674 15.4236 15.2535 13.6427 15.5916L16.3307 18.0748C16.8034 18.5147 16.804 19.2285 16.3321 19.6691C15.8602 20.1097 15.0946 20.1104 14.6216 19.6704L12.012 17.3016L9.64177 19.6552C9.4046 19.8846 9.08805 20 8.77109 20C8.46897 20 8.16645 19.8952 7.93169 19.6842C7.45075 19.252 7.43691 18.5384 7.90062 18.0902L10.4519 15.6048C8.62134 15.2746 7.51009 14.468 7.45295 14.4252C6.93171 14.0357 6.84811 13.3262 7.26591 12.8404C7.6839 12.3547 8.44492 12.2767 8.96616 12.6662C8.97719 12.6744 10.1394 13.4883 12.012 13.4895C13.8847 13.4883 15.0228 12.6744 15.0338 12.6662C15.5551 12.2767 16.3163 12.3547 16.7341 12.8404C17.1519 13.3262 17.0683 14.0357 16.5472 14.4252Z"
-                      fill="#D2D5DD" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_24531_5373">
-                      <rect width="24" height="24" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </a>
-              <a href="#" class="links__social-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M2 8C2 4.68652 4.68652 2 8 2H16C19.3135 2 22 4.68652 22 8V16C22 19.3135 19.3135 22 16 22H8C4.68652 22 2 19.3135 2 16V8ZM17.3438 13.4473C17.7139 13.7778 18.0845 14.1089 18.4121 14.4795C18.5415 14.626 18.6665 14.7754 18.7769 14.9346C18.835 15.0181 18.8892 15.104 18.938 15.1934C19.0425 15.3848 19.0439 15.5859 18.9727 15.7383C18.9058 15.8809 18.7754 15.981 18.606 15.9917L16.4209 15.9912C15.8569 16.0356 15.4077 15.8208 15.0293 15.4575C14.7271 15.1675 14.4468 14.8584 14.1558 14.5586C14.0366 14.4355 13.9116 14.3198 13.7622 14.2285C13.5962 14.1265 13.4419 14.0991 13.3086 14.1455C13.2031 14.1821 13.1104 14.2656 13.0352 14.3955C12.8613 14.6938 12.8213 15.0244 12.8047 15.3564C12.7812 15.8418 12.6255 15.9688 12.1089 15.9917C11.0044 16.0405 9.95654 15.8823 8.98242 15.3574C8.12305 14.8945 7.45801 14.2417 6.87842 13.502C5.75 12.0601 4.88574 10.4775 4.10938 8.84912C3.93457 8.48242 4.0625 8.28662 4.4917 8.27881C5.20459 8.26611 5.91797 8.26758 6.63086 8.27832C6.9209 8.28271 7.11279 8.43896 7.22461 8.69727C7.60986 9.59082 8.08203 10.4409 8.67432 11.229L8.78369 11.3721C8.90918 11.5317 9.04541 11.6826 9.22217 11.7969C9.4751 11.9604 9.66797 11.9062 9.7876 11.6401C9.86377 11.4707 9.89697 11.2896 9.91357 11.1084C9.97021 10.4873 9.97705 9.86621 9.87891 9.24756C9.81787 8.86035 9.58643 8.61035 9.17725 8.53711C8.96826 8.49951 8.99902 8.42676 9.10059 8.31445C9.27637 8.12061 9.44141 8.00049 9.771 8.00049L12.2397 8C12.6284 8.07178 12.7158 8.23633 12.7686 8.60596L12.771 11.1909C12.7661 11.334 12.8472 11.7578 13.1191 11.8511C13.3374 11.9189 13.4814 11.7539 13.6118 11.624C14.2036 11.0317 14.6255 10.333 15.0034 9.60986C15.1699 9.29102 15.314 8.96094 15.4536 8.63037C15.5024 8.51562 15.5635 8.42822 15.6455 8.36816C15.7378 8.30029 15.8564 8.26758 16.0117 8.26953L18.3887 8.27246C18.4585 8.27246 18.5298 8.27295 18.5991 8.28418C18.8101 8.31836 18.9404 8.37939 18.9985 8.4834C19.0503 8.57666 19.0439 8.70508 18.9854 8.87939C18.7979 9.43555 18.4399 9.90283 18.0835 10.3677L18.041 10.4233C17.6436 10.9409 17.2202 11.4399 16.8271 11.96C16.4658 12.4346 16.4941 12.6738 16.9429 13.0864C17.0752 13.208 17.2095 13.3276 17.3438 13.4473Z"
-                    fill="#D2D5DD" />
-                </svg>
-              </a>
-            </div>
-          </div>
-          <ul class="links__navigation-list section-container">
-            <li class="links__navigation-item" tabindex="0" onclick="scrollMenu('#podcasts')">Подкасты</li>
-            <li class="links__navigation-item" tabindex="0" onclick="scrollMenu('#broadcasts')">Передачи</li>
-            <li class="links__navigation-item" tabindex="0" onclick="scrollMenu('#guests')">Гости</li>
-            <li class="links__navigation-item" tabindex="0" onclick="scrollMenu('#playlists')">Плейлисты</li>
-            <li class="links__navigation-item" tabindex="0">Сетка</li>
-            <li class="links__navigation-item" tabindex="0" onclick="scrollMenu('#about-us')">О нас</li>
-            <li class="links__navigation-item" tabindex="0">Новости</li>
-            <li class="links__navigation-item" tabindex="0">Блоги</li>
-            <li class="links__navigation-item" tabindex="0">Топы</li>
-          </ul>
-        </div>
-        <span class="footer__line"></span>
-        <span class="footer__trademark">W-WAVE ® 2021</span>
-      </footer>
-    </main>
-
-    <div class="modal-form__bg">
-      <div class="modal-form">
-        <span class="modal-form__close" tabindex="0">
-          <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="21" cy="21" r="19.5" stroke="#A1A6B4" stroke-width="3" />
-            <path d="M29.6777 12L12 29.6777M29.6777 29.6777L12 12" stroke="#A1A6B4" stroke-width="3" />
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container footer__container">
+      <div class="footer__links links">
+        <div class="links__contacts section-container">
+          <svg class="links__logo" width="160" height="20" viewBox="0 0 160 20" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M29.2408 0.331491V11.7403C29.2408 14.4291 28.5054 16.4825 27.0345 17.9006C25.5636 19.3002 23.4783 20 20.7786 20C19.438 20 18.2371 19.8066 17.1758 19.4199C16.1332 19.0331 15.2767 18.4899 14.6064 17.7901C13.9176 18.4899 13.0518 19.0331 12.0091 19.4199C10.9665 19.8066 9.78418 20 8.46224 20C5.76252 20 3.67721 19.3002 2.20633 17.9006C0.735443 16.4825 0 14.4291 0 11.7403V0.331491H4.52437V11.6022C4.52437 13.1676 4.8502 14.3278 5.50186 15.0829C6.15351 15.8195 7.12169 16.1878 8.40639 16.1878C11.0316 16.1878 12.3443 14.6593 12.3443 11.6022V0.331491H16.8686V11.6022C16.8686 14.6593 18.1906 16.1878 20.8344 16.1878C23.4038 16.1878 24.6885 14.6593 24.6885 11.6022V0.331491H29.2408Z"
+              fill="white" />
+            <path
+              d="M97.6867 0.331491V11.7403C97.6867 14.4291 96.9513 16.4825 95.4804 17.9006C94.0095 19.3002 91.9242 20 89.2245 20C87.8839 20 86.683 19.8066 85.6217 19.4199C84.5791 19.0331 83.7226 18.4899 83.0524 17.7901C82.3635 18.4899 81.4977 19.0331 80.455 19.4199C79.4124 19.8066 78.2301 20 76.9082 20C74.2084 20 72.1231 19.3002 70.6522 17.9006C69.1814 16.4825 68.4459 14.4291 68.4459 11.7403V0.331491H72.9703V11.6022C72.9703 13.1676 73.2961 14.3278 73.9478 15.0829C74.5994 15.8195 75.5676 16.1878 76.8523 16.1878C79.4775 16.1878 80.7902 14.6593 80.7902 11.6022V0.331491H85.3145V11.6022C85.3145 14.6593 86.6365 16.1878 89.2803 16.1878C91.8497 16.1878 93.1344 14.6593 93.1344 11.6022V0.331491H97.6867Z"
+              fill="white" />
+            <path
+              d="M110.957 0C112.763 0 114.337 0.349908 115.677 1.04972C117.018 1.74954 118.061 2.78085 118.805 4.14365C119.55 5.50644 119.922 7.1547 119.922 9.0884V19.6685H115.398V15.0276H106.461V19.6685H101.992V9.0884C101.992 7.1547 102.365 5.50644 103.11 4.14365C103.854 2.78085 104.897 1.74954 106.238 1.04972C107.578 0.349908 109.151 0 110.957 0ZM115.398 11.4365V8.67403C115.398 7.07182 114.998 5.86556 114.197 5.05525C113.396 4.22652 112.307 3.81216 110.93 3.81216C109.533 3.81216 108.435 4.22652 107.634 5.05525C106.852 5.86556 106.461 7.07182 106.461 8.67403V11.4365H115.398Z"
+              fill="white" />
+            <path
+              d="M142.638 0.331491L134.176 19.6685H129.708L121.273 0.331491H126.161L132.109 14.1436L138.142 0.331491H142.638Z"
+              fill="white" />
+            <path
+              d="M160 18.011C159.069 18.6372 157.896 19.1252 156.481 19.4751C155.085 19.825 153.595 20 152.013 20C150.039 20 148.363 19.7606 146.985 19.2818C145.608 18.7845 144.565 18.1031 143.857 17.2376C143.15 16.3536 142.796 15.3499 142.796 14.2265C142.796 13.1952 143.085 12.2836 143.662 11.4917C144.239 10.6998 145.03 10.1105 146.036 9.72376C145.273 9.3186 144.677 8.76611 144.248 8.0663C143.839 7.36648 143.634 6.58379 143.634 5.71823C143.634 4.66851 143.96 3.71087 144.612 2.8453C145.263 1.97974 146.25 1.28913 147.572 0.773481C148.894 0.257827 150.514 0 152.431 0C153.698 0 154.936 0.128913 156.146 0.38674C157.356 0.62615 158.408 0.957641 159.302 1.38121L158.045 4.80663C156.332 4.01473 154.517 3.61878 152.599 3.61878C151.147 3.61878 150.048 3.83978 149.303 4.28177C148.577 4.70534 148.214 5.28545 148.214 6.0221C148.214 6.7035 148.456 7.22836 148.94 7.59668C149.443 7.94659 150.197 8.12155 151.203 8.12155H156.537V11.6575H150.923C149.788 11.6575 148.912 11.8508 148.298 12.2376C147.684 12.6243 147.376 13.186 147.376 13.9227C147.376 14.6961 147.767 15.3039 148.549 15.7459C149.35 16.1694 150.57 16.3812 152.208 16.3812C153.362 16.3812 154.517 16.2339 155.671 15.9392C156.825 15.6262 157.803 15.1934 158.604 14.6409L160 18.011Z"
+              fill="white" />
+            <path
+              d="M56.8231 11.2025H33.5483V7.83017H56.8231L52.7019 3.67512L55.067 1.29053L63.2258 9.51633L55.067 17.7421L52.7019 15.3576L56.8231 11.2025Z"
+              fill="#AA9DFA" />
           </svg>
-        </span>
-        <form action="" class="modal-form__form">
-          <fieldset class="modal-form__fieldset">
-            <legend class="modal-form__legend">
-              Вход
-            </legend>
-            <label for="" class="modal-form__label">
-              Если у вас ещё нет аккаунта, <span>зарегистрируйтесь</span>
-            </label>
-            <input type="text" class="modal-form__input modal-form__input-login" placeholder="Логин">
-            <input type="text" class="modal-form__input modal-form__input-password" placeholder="Пароль">
-            <button class="modal-form__button btn">
-              Войти
-            </button>
-          </fieldset>
-        </form>
-        <div class="modal-form__footer">
-          Войти с помощью
+          <div class="links__social">
+            <a href="#" class="links__social-link">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_24531_5372)">
+                  <path
+                    d="M21.543 6.498C22 8.28 22 12 22 12C22 12 22 15.72 21.543 17.502C21.289 18.487 20.546 19.262 19.605 19.524C17.896 20 12 20 12 20C12 20 6.107 20 4.395 19.524C3.45 19.258 2.708 18.484 2.457 17.502C2 15.72 2 12 2 12C2 12 2 8.28 2.457 6.498C2.711 5.513 3.454 4.738 4.395 4.476C6.107 4 12 4 12 4C12 4 17.896 4 19.605 4.476C20.55 4.742 21.292 5.516 21.543 6.498ZM10 15.5L16 12L10 8.5V15.5Z"
+                    fill="#D2D5DD" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_24531_5372">
+                    <rect width="24" height="24" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </a>
+            <a href="#" class="links__social-link">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_24531_5373)">
+                  <path
+                    d="M10.2338 8.14624C10.2338 9.0928 11.0569 9.86023 12.0724 9.86023C13.088 9.86023 13.9111 9.0928 13.9111 8.14624C13.9111 7.19968 13.088 6.43231 12.0724 6.43231C11.0569 6.43231 10.2338 7.19968 10.2338 8.14624Z"
+                    fill="#D2D5DD" />
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M8 2C4.68629 2 2 4.68629 2 8V16C2 19.3137 4.68629 22 8 22H16C19.3137 22 22 19.3137 22 16V8C22 4.68629 19.3137 2 16 2H8ZM7.62436 8.14617C7.62436 5.85633 9.61571 4 12.0724 4C14.5292 4 16.5206 5.85633 16.5206 8.14617C16.5206 10.4361 14.5292 12.2925 12.0724 12.2925C9.61571 12.2925 7.62436 10.4361 7.62436 8.14617ZM16.5472 14.4252C16.4907 14.4674 15.4236 15.2535 13.6427 15.5916L16.3307 18.0748C16.8034 18.5147 16.804 19.2285 16.3321 19.6691C15.8602 20.1097 15.0946 20.1104 14.6216 19.6704L12.012 17.3016L9.64177 19.6552C9.4046 19.8846 9.08805 20 8.77109 20C8.46897 20 8.16645 19.8952 7.93169 19.6842C7.45075 19.252 7.43691 18.5384 7.90062 18.0902L10.4519 15.6048C8.62134 15.2746 7.51009 14.468 7.45295 14.4252C6.93171 14.0357 6.84811 13.3262 7.26591 12.8404C7.6839 12.3547 8.44492 12.2767 8.96616 12.6662C8.97719 12.6744 10.1394 13.4883 12.012 13.4895C13.8847 13.4883 15.0228 12.6744 15.0338 12.6662C15.5551 12.2767 16.3163 12.3547 16.7341 12.8404C17.1519 13.3262 17.0683 14.0357 16.5472 14.4252Z"
+                    fill="#D2D5DD" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_24531_5373">
+                    <rect width="24" height="24" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </a>
+            <a href="#" class="links__social-link">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M2 8C2 4.68652 4.68652 2 8 2H16C19.3135 2 22 4.68652 22 8V16C22 19.3135 19.3135 22 16 22H8C4.68652 22 2 19.3135 2 16V8ZM17.3438 13.4473C17.7139 13.7778 18.0845 14.1089 18.4121 14.4795C18.5415 14.626 18.6665 14.7754 18.7769 14.9346C18.835 15.0181 18.8892 15.104 18.938 15.1934C19.0425 15.3848 19.0439 15.5859 18.9727 15.7383C18.9058 15.8809 18.7754 15.981 18.606 15.9917L16.4209 15.9912C15.8569 16.0356 15.4077 15.8208 15.0293 15.4575C14.7271 15.1675 14.4468 14.8584 14.1558 14.5586C14.0366 14.4355 13.9116 14.3198 13.7622 14.2285C13.5962 14.1265 13.4419 14.0991 13.3086 14.1455C13.2031 14.1821 13.1104 14.2656 13.0352 14.3955C12.8613 14.6938 12.8213 15.0244 12.8047 15.3564C12.7812 15.8418 12.6255 15.9688 12.1089 15.9917C11.0044 16.0405 9.95654 15.8823 8.98242 15.3574C8.12305 14.8945 7.45801 14.2417 6.87842 13.502C5.75 12.0601 4.88574 10.4775 4.10938 8.84912C3.93457 8.48242 4.0625 8.28662 4.4917 8.27881C5.20459 8.26611 5.91797 8.26758 6.63086 8.27832C6.9209 8.28271 7.11279 8.43896 7.22461 8.69727C7.60986 9.59082 8.08203 10.4409 8.67432 11.229L8.78369 11.3721C8.90918 11.5317 9.04541 11.6826 9.22217 11.7969C9.4751 11.9604 9.66797 11.9062 9.7876 11.6401C9.86377 11.4707 9.89697 11.2896 9.91357 11.1084C9.97021 10.4873 9.97705 9.86621 9.87891 9.24756C9.81787 8.86035 9.58643 8.61035 9.17725 8.53711C8.96826 8.49951 8.99902 8.42676 9.10059 8.31445C9.27637 8.12061 9.44141 8.00049 9.771 8.00049L12.2397 8C12.6284 8.07178 12.7158 8.23633 12.7686 8.60596L12.771 11.1909C12.7661 11.334 12.8472 11.7578 13.1191 11.8511C13.3374 11.9189 13.4814 11.7539 13.6118 11.624C14.2036 11.0317 14.6255 10.333 15.0034 9.60986C15.1699 9.29102 15.314 8.96094 15.4536 8.63037C15.5024 8.51562 15.5635 8.42822 15.6455 8.36816C15.7378 8.30029 15.8564 8.26758 16.0117 8.26953L18.3887 8.27246C18.4585 8.27246 18.5298 8.27295 18.5991 8.28418C18.8101 8.31836 18.9404 8.37939 18.9985 8.4834C19.0503 8.57666 19.0439 8.70508 18.9854 8.87939C18.7979 9.43555 18.4399 9.90283 18.0835 10.3677L18.041 10.4233C17.6436 10.9409 17.2202 11.4399 16.8271 11.96C16.4658 12.4346 16.4941 12.6738 16.9429 13.0864C17.0752 13.208 17.2095 13.3276 17.3438 13.4473Z"
+                  fill="#D2D5DD" />
+              </svg>
+            </a>
+          </div>
         </div>
-        <div class="modal-form__links">
-          <a href="#" class="modal-form__link">
-            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M23.3 33.6667V20.7667H27.6204L28.2667 15.7519H23.3V12.5519C23.3 11.1 23.7037 10.1093 25.7852 10.1093H28.4408V5.62408C27.1552 5.48769 25.8632 5.42154 24.5704 5.42594C20.7426 5.42594 18.1223 7.76297 18.1223 12.0556V15.7519H13.7926V20.7667H18.1223V33.6667H2.18523C1.69408 33.6667 1.22306 33.4716 0.875769 33.1243C0.528479 32.777 0.333374 32.306 0.333374 31.8148V2.1852C0.333374 1.69405 0.528479 1.22303 0.875769 0.875738C1.22306 0.528449 1.69408 0.333344 2.18523 0.333344H31.8149C32.306 0.333344 32.777 0.528449 33.1243 0.875738C33.4716 1.22303 33.6667 1.69405 33.6667 2.1852V31.8148C33.6667 32.306 33.4716 32.777 33.1243 33.1243C32.777 33.4716 32.306 33.6667 31.8149 33.6667H23.3Z"
-                fill="#A1A6B4" />
-            </svg>
-          </a>
-          <a href="#" class="modal-form__link">
-            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="33.33" height="33.33" rx="2" fill="#A1A6B4" />
-              <path
-                d="M17.7487 23.332H16.3854C16.3854 23.332 13.3772 23.5131 10.7277 20.7545C7.83835 17.7461 5.28686 11.7765 5.28686 11.7765C5.28686 11.7765 5.13973 11.3853 5.29964 11.1959C5.47938 10.9831 5.96857 10.9695 5.96857 10.9695L9.22782 10.9482C9.22782 10.9482 9.53491 10.9994 9.75468 11.1608C9.93588 11.294 10.0373 11.543 10.0373 11.543C10.0373 11.543 10.5641 12.8752 11.2617 14.0804C12.6233 16.4331 13.2575 16.9477 13.7198 16.6957C14.3934 16.3283 14.1914 13.3698 14.1914 13.3698C14.1914 13.3698 14.2037 12.296 13.8522 11.8177C13.58 11.4475 13.0667 11.3391 12.84 11.3089C12.6566 11.2844 12.9576 10.8587 13.3478 10.6676C13.9343 10.3803 14.9699 10.3641 16.1938 10.3765C17.1473 10.3863 17.4219 10.4458 17.7946 10.5357C18.6597 10.7446 18.6327 11.4138 18.5745 12.8578L18.5745 12.8579C18.5571 13.2893 18.537 13.7899 18.537 14.3681C18.537 14.4983 18.5332 14.6371 18.5293 14.7798V14.7799C18.509 15.5193 18.4858 16.3656 18.9726 16.6802C19.2223 16.8415 19.8331 16.7042 21.3603 14.111C22.084 12.8819 22.627 11.4368 22.627 11.4368C22.627 11.4368 22.7453 11.1791 22.9297 11.0688C23.1181 10.9561 23.3726 10.9907 23.3726 10.9907L26.8023 10.9695C26.8023 10.9695 27.8329 10.8466 27.9997 11.3118C28.1747 11.8001 27.6146 12.9402 26.2135 14.8077C24.8827 16.5813 24.236 17.2332 24.2968 17.8106C24.3401 18.2221 24.7429 18.5959 25.5137 19.311L25.5668 19.3603C27.2548 20.9272 27.7051 21.7501 27.8121 21.9456C27.8207 21.9615 27.8271 21.9732 27.8318 21.9809C28.5873 23.2337 26.9939 23.332 26.9939 23.332L23.9477 23.3746C23.9477 23.3746 23.2931 23.5041 22.4317 22.9125C21.9813 22.6033 21.5409 22.0985 21.1214 21.6174L21.1214 21.6174C20.4798 20.8818 19.8868 20.2019 19.3806 20.3624C18.5317 20.6319 18.5583 22.4613 18.5583 22.4613C18.5583 22.4613 18.5645 22.852 18.371 23.0601C18.1605 23.2866 17.7487 23.332 17.7487 23.332Z"
-                fill="#121723" />
-            </svg>
-          </a>
-          <a href="#" class="modal-form__link">
-            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="33.33" height="33.33" rx="2" fill="#A1A6B4" />
-              <path
-                d="M20.9403 11.9923C20.1517 11.2694 18.7687 10.4043 16.7183 10.4043C13.8309 10.4043 11.3802 12.2649 10.4945 14.8364C10.2761 15.5001 10.1427 16.2111 10.1427 16.9459C10.1427 17.6806 10.2761 18.3917 10.5066 19.0553C11.3802 21.6269 13.8309 23.4874 16.7183 23.4874C18.344 23.4874 19.5815 23.0489 20.5036 22.4208C21.9595 21.4254 22.6146 19.9441 22.7359 18.9605H16.7183V15.0024H26.9701C27.1277 15.666 27.2006 16.3059 27.2006 17.1829C27.2006 20.4299 26.0116 23.1675 23.9491 25.028C22.1414 26.6634 19.6664 27.6115 16.7183 27.6115C12.4477 27.6115 8.75954 25.2176 6.96398 21.7335C6.22395 20.2877 5.79932 18.6642 5.79932 16.9459C5.79932 15.2275 6.22395 13.604 6.96398 12.1582C8.75954 8.67409 12.4477 6.28027 16.7183 6.28027C19.6664 6.28027 22.1293 7.33499 24.0219 9.05333L20.9403 11.9923Z"
-                fill="#121723" />
-            </svg>
-          </a>
-        </div>
+        <ul class="links__navigation-list section-container">
+          <li class="links__navigation-item" tabindex="0" data-id="#podcasts">Подкасты</li>
+          <li class="links__navigation-item" tabindex="0" data-id="#broadcasts">Передачи</li>
+          <li class="links__navigation-item" tabindex="0" data-id="#guests">Гости</li>
+          <li class="links__navigation-item" tabindex="0" data-id="#playlists">Плейлисты</li>
+          <li class="links__navigation-item" tabindex="0">Сетка</li>
+          <li class="links__navigation-item" tabindex="0" data-id="#about-us">О нас</li>
+          <li class="links__navigation-item" tabindex="0">Новости</li>
+          <li class="links__navigation-item" tabindex="0">Блоги</li>
+          <li class="links__navigation-item" tabindex="0">Топы</li>
+        </ul>
+      </div>
+    </div>
+    <span class="footer__line"></span>
+    <span class="footer__trademark">W-WAVE ® 2021</span>
+  </footer>
+
+  <div class="modal modal-form-bg">
+    <div class="modal__form modal-form">
+      <span class="modal-form__close" tabindex="0">
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="21" cy="21" r="19.5" stroke="#A1A6B4" stroke-width="3" />
+          <path d="M29.6777 12L12 29.6777M29.6777 29.6777L12 12" stroke="#A1A6B4" stroke-width="3" />
+        </svg>
+      </span>
+      <form action="https://jsonplaceholder.typicode.com/posts" class="modal-form__form" id="authorization-form">
+        <fieldset class="modal-form__fieldset">
+          <legend class="modal-form__legend">
+            Вход
+          </legend>
+          <label class="modal-form__label">
+            Если у вас ещё нет аккаунта, <span>зарегистрируйтесь</span>
+          </label>
+          <label for="auth-form-login" class="error-label auth-error-label">
+            <input id="auth-form-login" type="text" class="modal-form__input modal-form__input-login" placeholder="Логин">
+          </label>
+          <label for="auth-form-password" class="error-label auth-error-label">
+            <input id="auth-form-password" type="password" class="modal-form__input modal-form__input-password" placeholder="Пароль">
+          </label>
+          <button class="modal-form__button btn">
+            Войти
+          </button>
+        </fieldset>
+      </form>
+      <div class="modal-form__footer">
+        Войти с помощью
+      </div>
+      <div class="modal-form__links">
+        <a href="#" class="modal-form__link">
+          <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M23.3 33.6667V20.7667H27.6204L28.2667 15.7519H23.3V12.5519C23.3 11.1 23.7037 10.1093 25.7852 10.1093H28.4408V5.62408C27.1552 5.48769 25.8632 5.42154 24.5704 5.42594C20.7426 5.42594 18.1223 7.76297 18.1223 12.0556V15.7519H13.7926V20.7667H18.1223V33.6667H2.18523C1.69408 33.6667 1.22306 33.4716 0.875769 33.1243C0.528479 32.777 0.333374 32.306 0.333374 31.8148V2.1852C0.333374 1.69405 0.528479 1.22303 0.875769 0.875738C1.22306 0.528449 1.69408 0.333344 2.18523 0.333344H31.8149C32.306 0.333344 32.777 0.528449 33.1243 0.875738C33.4716 1.22303 33.6667 1.69405 33.6667 2.1852V31.8148C33.6667 32.306 33.4716 32.777 33.1243 33.1243C32.777 33.4716 32.306 33.6667 31.8149 33.6667H23.3Z"
+              fill="#A1A6B4" />
+          </svg>
+        </a>
+        <a href="#" class="modal-form__link">
+          <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="33.33" height="33.33" rx="2" fill="#A1A6B4" />
+            <path
+              d="M17.7487 23.332H16.3854C16.3854 23.332 13.3772 23.5131 10.7277 20.7545C7.83835 17.7461 5.28686 11.7765 5.28686 11.7765C5.28686 11.7765 5.13973 11.3853 5.29964 11.1959C5.47938 10.9831 5.96857 10.9695 5.96857 10.9695L9.22782 10.9482C9.22782 10.9482 9.53491 10.9994 9.75468 11.1608C9.93588 11.294 10.0373 11.543 10.0373 11.543C10.0373 11.543 10.5641 12.8752 11.2617 14.0804C12.6233 16.4331 13.2575 16.9477 13.7198 16.6957C14.3934 16.3283 14.1914 13.3698 14.1914 13.3698C14.1914 13.3698 14.2037 12.296 13.8522 11.8177C13.58 11.4475 13.0667 11.3391 12.84 11.3089C12.6566 11.2844 12.9576 10.8587 13.3478 10.6676C13.9343 10.3803 14.9699 10.3641 16.1938 10.3765C17.1473 10.3863 17.4219 10.4458 17.7946 10.5357C18.6597 10.7446 18.6327 11.4138 18.5745 12.8578L18.5745 12.8579C18.5571 13.2893 18.537 13.7899 18.537 14.3681C18.537 14.4983 18.5332 14.6371 18.5293 14.7798V14.7799C18.509 15.5193 18.4858 16.3656 18.9726 16.6802C19.2223 16.8415 19.8331 16.7042 21.3603 14.111C22.084 12.8819 22.627 11.4368 22.627 11.4368C22.627 11.4368 22.7453 11.1791 22.9297 11.0688C23.1181 10.9561 23.3726 10.9907 23.3726 10.9907L26.8023 10.9695C26.8023 10.9695 27.8329 10.8466 27.9997 11.3118C28.1747 11.8001 27.6146 12.9402 26.2135 14.8077C24.8827 16.5813 24.236 17.2332 24.2968 17.8106C24.3401 18.2221 24.7429 18.5959 25.5137 19.311L25.5668 19.3603C27.2548 20.9272 27.7051 21.7501 27.8121 21.9456C27.8207 21.9615 27.8271 21.9732 27.8318 21.9809C28.5873 23.2337 26.9939 23.332 26.9939 23.332L23.9477 23.3746C23.9477 23.3746 23.2931 23.5041 22.4317 22.9125C21.9813 22.6033 21.5409 22.0985 21.1214 21.6174L21.1214 21.6174C20.4798 20.8818 19.8868 20.2019 19.3806 20.3624C18.5317 20.6319 18.5583 22.4613 18.5583 22.4613C18.5583 22.4613 18.5645 22.852 18.371 23.0601C18.1605 23.2866 17.7487 23.332 17.7487 23.332Z"
+              fill="#121723" />
+          </svg>
+        </a>
+        <a href="#" class="modal-form__link">
+          <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="33.33" height="33.33" rx="2" fill="#A1A6B4" />
+            <path
+              d="M20.9403 11.9923C20.1517 11.2694 18.7687 10.4043 16.7183 10.4043C13.8309 10.4043 11.3802 12.2649 10.4945 14.8364C10.2761 15.5001 10.1427 16.2111 10.1427 16.9459C10.1427 17.6806 10.2761 18.3917 10.5066 19.0553C11.3802 21.6269 13.8309 23.4874 16.7183 23.4874C18.344 23.4874 19.5815 23.0489 20.5036 22.4208C21.9595 21.4254 22.6146 19.9441 22.7359 18.9605H16.7183V15.0024H26.9701C27.1277 15.666 27.2006 16.3059 27.2006 17.1829C27.2006 20.4299 26.0116 23.1675 23.9491 25.028C22.1414 26.6634 19.6664 27.6115 16.7183 27.6115C12.4477 27.6115 8.75954 25.2176 6.96398 21.7335C6.22395 20.2877 5.79932 18.6642 5.79932 16.9459C5.79932 15.2275 6.22395 13.604 6.96398 12.1582C8.75954 8.67409 12.4477 6.28027 16.7183 6.28027C19.6664 6.28027 22.1293 7.33499 24.0219 9.05333L20.9403 11.9923Z"
+              fill="#121723" />
+          </svg>
+        </a>
       </div>
     </div>
   </div>
+  <script>
+    const validateAuthForm = new window.JustValidate('#authorization-form');
+
+    validateAuthForm.addField('#auth-form-login', [
+      {
+        rule: 'minLength',
+        value: 3,
+        errorMessage: 'Минимальная длина логина - 3 символа',
+      },
+      {
+        rule: 'required',
+        errorMessage: 'Пожалуйста, введите логин'
+      }
+    ])
+      .addField('#auth-form-password', [
+        {
+          rule: 'password',
+          errorMessage: 'Пароль должен содержать миинмум: 8 символов, 1 букву, 1 цифру'
+        },
+        {
+          rule: 'required',
+          errorMessage: 'Пожалуйста, введите пароль'
+        }
+      ]).onSuccess((event) => {
+        console.log('Validation passes and form submitted', event);
+      });
+  </script>
 </body>
 
 </html>
