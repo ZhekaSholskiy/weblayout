@@ -11,3 +11,5 @@ choices.passedElement.element.addEventListener('showDropdown', () => {
     if (el.dataset.value === value) el.remove();
   });
 }, false)
+
+document.querySelector('.choices').setAttribute('aria-label', 'выбрать автора');

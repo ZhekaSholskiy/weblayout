@@ -146,19 +146,19 @@ body {
   color: var(--hover-text);
 }
 
-.nav__link:focus {
+.nav__link:focus-visible {
   outline: none;
 }
 
-.nav__link:focus {
+.nav__link:focus-visible {
   color: var(--white-text);
 }
 
-.nav__link:focus::after {
+.nav__link:focus-visible::after {
   background-color: var(--text-bg);
 }
 
-.nav__link--active {
+.nav__link:active {
   color: #4F28A5 !important;
 }
 
@@ -234,11 +234,11 @@ body {
   stroke: var(--text-bg);
 }
 
-.nav-top__search:focus svg path {
+.nav-top__search:focus-visible svg path {
   stroke: var(--text-bg);
 }
 
-.nav-top__search--active svg path {
+.nav-top__search:active svg path {
   stroke: var(--active-btn) !important;
 }
 
@@ -260,7 +260,7 @@ body {
   background-color: var(--text-color);
 }
 
-.nav-top__authoriztion:focus {
+.nav-top__authoriztion:focus-visible {
   background-color: #AA9DFA;
 }
 
@@ -349,11 +349,11 @@ body {
   fill: var(--hover-text);
 }
 
-.play__btn:focus svg path {
+.play__btn:focus-visible svg path {
   fill: var(--text-bg);
 }
 
-.play__btn--active svg path {
+.play__btn:active svg path {
   fill: var(--active-btn) !important;
 }
 
@@ -367,7 +367,7 @@ body {
   transition: outline .2s ease-in-out;
 }
 
-.audio-plays-burger:focus {
+.audio-plays-burger:focus-visible {
   outline: 1px solid var(--hover-text);
 }
 
@@ -462,7 +462,7 @@ body {
 }
 
 
-.nav-top__burger:focus {
+.nav-top__burger:focus-visible {
   outline: none;
 }
 
@@ -470,7 +470,7 @@ body {
   opacity: 1;
 }
 
-.nav-top__burger:focus .nav-top__burger-line {
+.nav-top__burger:focus-visible .nav-top__burger-line {
   background-color: var(--white-text);
 }
 
@@ -577,12 +577,12 @@ body {
   background-color: var(--text-bg);
 }
 
-.hero__btn:focus {
+.hero__btn:focus-visible {
   background-color: var(--text-bg);
   border: 2px solid var(--active-btn);
 }
 
-.hero__btn--active {
+.hero__btn:active {
   background-color: var(--active-btn) !important;
 }
 
@@ -745,24 +745,24 @@ body {
   fill: var(--hover-text);
 }
 
-.content__play-btn:focus {
+.content__play-btn:focus-visible {
   outline: none;
 }
 
-.content__play-btn:focus svg circle {
+.content__play-btn:focus-visible svg circle {
   stroke:var(--text-bg);
 }
 
-.content__play-btn:focus svg path {
+.content__play-btn:focus-visible svg path {
   fill: var(--text-bg);
 }
 
-.content__play-btn--active svg circle {
+.content__play-btn:active svg circle {
   fill: var(--active-btn);
   stroke: var(--active-btn);
 }
 
-.content__play-btn--active svg path {
+.content__play-btn:active svg path {
   fill: var(--white-text);
 }
 
@@ -775,7 +775,7 @@ body {
   fill: var(--hover-text);
 }
 
-.content__play-btn:focus svg rect {
+.content__play-btn:focus-visible svg rect {
   fill:var(--text-bg);
 }
 
@@ -822,12 +822,12 @@ body {
   background-color: var(--hover-text);
 }
 
-.podcasts__btn:focus {
+.podcasts__btn:focus-visible {
   color: var(--white-text);
   background-color: var(--text-bg);
 }
 
-.podcasts__container .podcasts__btn--active {
+.podcasts__container .podcasts__btn:active {
   color: var(--white-text);
   background-color: var(--active-btn);
   border: 1px solid var(--active-btn);
@@ -858,20 +858,20 @@ body {
   fill: var(--hover-text)
 }
 
-.content__user-activity button:focus {
+.content__user-activity button:focus-visible {
   outline: none;
 }
 
-.content__user-activity button:focus .user-activity-bg {
+.content__user-activity button:focus-visible .user-activity-bg {
   color: var(--white-text);
   transition: color .3s ease-in-out;
 }
 
-.content__user-activity button:focus svg path {
+.content__user-activity button:focus-visible svg path {
   fill: var(--white-text);
 }
 
-.content__user-activity button:focus .user-activity-bg::after {
+.content__user-activity button:focus-visible .user-activity-bg::after {
   background-color: var(--text-bg);
 }
 
@@ -950,11 +950,11 @@ body {
   background-color: var(--text-color);
 }
 
-.broadcasts__btn:focus {
+.broadcasts__btn:focus-visible {
   background-color: var(--text-bg);
 }
 
-.broadcasts__item .broadcasts__btn--active {
+.broadcasts__item .broadcasts__btn:active {
   background-color: var(--active-btn);
   border: 1px solid var(--active-btn);
   color: var(--white-text);
@@ -1057,32 +1057,32 @@ body {
   fill: var(--hover-text);
 }
 
-.changing-item:focus {
+.changing-item:focus-visible {
   outline: 1px solid var(--hover-text);
   outline-offset: 7px;
 }
 
-.changing-item:focus .broadcasts-item__details {
+.changing-item:focus-visible .broadcasts-item__details {
   color: var(--white-text);
 }
 
-.changing-item:focus .broadcasts-item__details svg path {
+.changing-item:focus-visible .broadcasts-item__details svg path {
   fill: var(--white-text);
 }
 
-.changing-item:focus .broadcasts-item__details {
+.changing-item:focus-visible .broadcasts-item__details {
   background-color: var(--text-bg);
 }
 
-.changing-item--active .broadcasts__content .broadcasts-item__details {
+.changing-item:active .broadcasts__content .broadcasts-item__details {
   color: var(--active-btn);
 }
 
-.changing-item--active .broadcasts__content .broadcasts-item__details svg {
+.changing-item:active .broadcasts__content .broadcasts-item__details svg {
   transform: scale(1.3,1) translateX(2px);
 }
 
-.changing-item--active .broadcasts__content .broadcasts-item__details svg path {
+.changing-item:active .broadcasts__content .broadcasts-item__details svg path {
   fill: var(--active-btn);
 }
 
@@ -1189,7 +1189,7 @@ body {
   color: var(--text-color);
 }
 
-[data-choice-selectable]:focus {
+[data-choice-selectable]:focus-visible {
   background-color: var(--text-bg);
   outline: none;
   color: var(--text-color);
@@ -1303,7 +1303,7 @@ body {
   color: var(--text-bg);
 }
 
-.guests-names-item:focus {
+.guests-names-item:focus-visible {
   outline: none;
   color: var(--text-bg);
   background-color: var(--accordion-focus);
@@ -1418,16 +1418,16 @@ body {
   stroke: var(--text-bg);
 }
 
-.ac-trigger:focus {
+.ac-trigger:focus-visible {
   background-color: var(--accordion-focus);
   outline: none;
 }
 
-.ac-trigger--active .guests__item-btn {
+.ac-trigger:active .guests__item-btn {
   fill: var(--text-bg);
 }
 
-.guests__item .ac-trigger--active .guests__item-btn path {
+.guests__item .ac-trigger:active .guests__item-btn path {
   stroke: var(--white-text);
 }
 
@@ -1443,11 +1443,11 @@ body {
   fill: var(--hover-text);
 }
 
-.guest__link:focus svg path {
+.guest__link:focus-visible svg path {
   fill: var(--text-bg);
 }
 
-.guest__link:focus {
+.guest__link:focus-visible {
   outline: none;
 }
 
@@ -1461,7 +1461,7 @@ body {
   border: 1px solid var(--text-bg);
 }
 
-.guest__btn:focus {
+.guest__btn:focus-visible {
   background-color: var(--hover-text);
   color: var(--white-text);
   border: 1px solid var(--hover-text);
@@ -1554,11 +1554,11 @@ body {
   stroke: var(--hover-text);
 }
 
-.playlists__item:focus {
+.playlists__item:focus-visible {
   outline: none;
 }
 
-.playlists__item:focus .custom-radio svg .custom-radio-outer {
+.playlists__item:focus-visible .custom-radio svg .custom-radio-outer {
   stroke: var(--hover-text);
   fill: var(--color-line);
 }
@@ -1721,41 +1721,41 @@ body {
   opacity: 1;
 }
 
-.playlists__music-groups-item:focus {
+.playlists__music-groups-item:focus-visible {
   outline: none;
 }
 
-.playlists__music-groups-item:focus .music-group-item__preview::after {
+.playlists__music-groups-item:focus-visible .music-group-item__preview::after {
   opacity: 0.8;
 }
 
-.playlists__music-groups-item:focus .music-group-item__descr {
+.playlists__music-groups-item:focus-visible .music-group-item__descr {
   background-color: var(--text-bg);
   border: 1px solid var(--text-bg);
 }
 
-.playlists__music-groups-item:focus .music-group-item__descr * {
+.playlists__music-groups-item:focus-visible .music-group-item__descr * {
   color: var(--text-color);
 }
 
-.playlists__music-groups-item:focus .preview__play-btn {
+.playlists__music-groups-item:focus-visible .preview__play-btn {
   opacity: 1;
 }
 
-.playlists__music-groups-list .playlists__music-groups-item--active .music-group-item__preview::after {
+.playlists__music-groups-list .playlists__music-groups-item:active .music-group-item__preview::after {
   opacity: 0.8;
 }
 
-.playlists__music-groups-list .playlists__music-groups-item--active .music-group-item__descr {
+.playlists__music-groups-list .playlists__music-groups-item:active .music-group-item__descr {
   background-color: var(--active-btn);
   border: 1px solid var(--active-btn);
 }
 
-.playlists__music-groups-list .playlists__music-groups-item--active .music-group-item__descr * {
+.playlists__music-groups-list .playlists__music-groups-item:active .music-group-item__descr * {
   color: var(--white-text);
 }
 
-.playlists__music-groups-list .playlists__music-groups-item--active .preview__play-btn {
+.playlists__music-groups-list .playlists__music-groups-item:active .preview__play-btn {
   opacity: 1;
   width: 49px;
   height: 49px;
@@ -1794,15 +1794,15 @@ body {
   stroke: var(--text-bg);
 }
 
-.swiper-button-interactive:focus {
+.swiper-button-interactive:focus-visible {
   outline: none;
 }
 
-.swiper-button-interactive:focus circle {
+.swiper-button-interactive:focus-visible circle {
   stroke: var(--hover-text);
 }
 
-.swiper-button-interactive:focus path {
+.swiper-button-interactive:focus-visible path {
   stroke: var(--hover-text);
 }
 
@@ -1983,30 +1983,30 @@ body {
   fill: var(--same-wave-color);
 }
 
-.same-wave__btn:focus {
+.same-wave__btn:focus-visible {
   background-color: var(--same-wave-darker);
   color: var(--text-color);
 }
 
-.same-wave__btn:focus svg g path:first-child {
+.same-wave__btn:focus-visible svg g path:first-child {
   fill: var(--same-wave-color);
 }
 
-.same-wave__btn:focus svg g path:last-child {
+.same-wave__btn:focus-visible svg g path:last-child {
   fill: var(--text-color);
 }
 
-.same-wave__descr .same-wave__btn--active {
+.same-wave__descr .same-wave__btn:active {
   background-color: var(--same-wave-darker);
   color: var(--text-color);
   border: 1px solid var(--same-wave-darker);
 }
 
-.same-wave__descr .same-wave__btn--active svg g path:first-child {
+.same-wave__descr .same-wave__btn:active svg g path:first-child {
   fill: var(--text-color);
 }
 
-.same-wave__descr .same-wave__btn--active svg g path:last-child {
+.same-wave__descr .same-wave__btn:active svg g path:last-child {
   fill: var(--same-wave-darker);
 }
 
@@ -2241,7 +2241,7 @@ body {
   background-color: var(--text-bg);
 }
 
-.form__btn:focus {
+.form__btn:focus-visible {
   background-color: var(--text-bg);
   border: 2px solid var(--active-btn);
 }
@@ -2320,12 +2320,12 @@ body {
   color: var(--text-bg);
 }
 
-.links__navigation-item:focus {
+.links__navigation-item:focus-visible {
   background-color: var(--text-bg);
   outline: none;
 }
 
-.links__navigation-list .links__navigation-item--active {
+.links__navigation-list .links__navigation-item:active {
   color: var(--active-btn);
 }
 
@@ -2353,15 +2353,15 @@ body {
   fill: var(--hover-text);
 }
 
-.links__social-link:focus svg path {
+.links__social-link:focus-visible svg path {
   fill: var(--text-bg);
 }
 
-.links__social-link:focus {
+.links__social-link:focus-visible {
   outline: none;
 }
 
-.links__social .links__social-link--active svg path {
+.links__social .links__social-link:active svg path {
   fill: var(--active-btn);
 }
 
@@ -2467,7 +2467,7 @@ body {
   background-color: var(--text-bg);
 }
 
-.modal-form__button:focus {
+.modal-form__button:focus-visible {
   background-color: var(--text-bg);
   border: 2px solid var(--active-btn);
 }
@@ -2496,11 +2496,11 @@ body {
   fill: var(--hover-text);
 }
 
-.modal-form__link:first-child:focus svg path {
+.modal-form__link:first-child:focus-visible svg path {
   fill: var(--text-bg);
 }
 
-.modal-form__link:first-child:focus {
+.modal-form__link:first-child:focus-visible {
   outline: none;
 }
 
@@ -2512,11 +2512,11 @@ body {
   fill: var(--hover-text);
 }
 
-.modal-form__link:nth-last-child(-n + 2):focus svg rect {
+.modal-form__link:nth-last-child(-n + 2):focus-visible svg rect {
   fill: var(--text-bg);
 }
 
-.modal-form__link:nth-last-child(-n + 2):focus {
+.modal-form__link:nth-last-child(-n + 2):focus-visible {
   outline: none;
 }
 
@@ -2553,12 +2553,12 @@ body {
   stroke: var(--hover-text);
 }
 
-.modal-form__close:focus svg circle,
-.modal-form__close:focus svg path  {
+.modal-form__close:focus-visible svg circle,
+.modal-form__close:focus-visible svg path  {
   stroke: var(--text-bg);
 }
 
-.modal-form__close:focus {
+.modal-form__close:focus-visible {
   outline: none;
 }
 

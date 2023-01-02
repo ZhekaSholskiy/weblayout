@@ -26,6 +26,8 @@ function manageSearch() {
 
 searchBtn.addEventListener('click', manageSearch);
 
-searchContainer.addEventListener('keypress', (e) => {
-  if (e.key === " ") manageSearch();
+searchContainer.addEventListener('keydown', (e) => {
+  if (e.code === "Space" || e.code === "Enter") {
+    e.preventDefault();
+    manageSearch()};
 });
