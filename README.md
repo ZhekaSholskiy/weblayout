@@ -1,6 +1,6 @@
 # weblayout
 
-It's a website for media company.
+It's a website for media company. Play RadioWWave.mp4 to see how it works.
 
 features:
   - cross - browser compatibility;
